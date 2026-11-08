@@ -43,7 +43,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 | Step | File | Topic | What you see in the arena |
 |---|---|---|---|
 | 1 | `step1_basics.go` | Functions, multiple return values | Your name and your ASCII art |
-| 2 | `step2_movement.go` | `switch`, enums (`iota`) | You walk (WASD or arrow keys) |
+| 2 | `step2_movement.go` | Flow control (`switch`), enums (`iota`) | You walk (WASD or arrow keys) |
 | 3 | `step3_looks.go` | `for` loops, `switch` | Your art in your colour, facing the way you walk |
 | 4 | `step4_commands.go` | `if`, strings | Chat commands like `/wave` |
 | 5 | `step5_structs.go` | Structs and methods | Name cards; high-fives |

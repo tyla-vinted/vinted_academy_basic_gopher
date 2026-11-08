@@ -1,6 +1,6 @@
 package avatar
 
-// Step 2: switch and enums: walking.
+// Step 2: flow control and enums: walking.
 // Check: make check
 
 // Direction is where you walk. It is an enum: a type with a named constant
