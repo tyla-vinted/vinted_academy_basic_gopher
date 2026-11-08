@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestStep2_ColorFor(t *testing.T) {
+func TestStep3_ColorFor(t *testing.T) {
 	tests := []struct {
 		name   string
 		want   color.RGBA
@@ -35,7 +35,7 @@ func TestStep2_ColorFor(t *testing.T) {
 	}
 }
 
-func TestStep2_NormalizeArt(t *testing.T) {
+func TestStep3_NormalizeArt(t *testing.T) {
 	in := []string{
 		"ab",
 		"a\tb",
@@ -57,7 +57,7 @@ func TestStep2_NormalizeArt(t *testing.T) {
 	}
 }
 
-func TestStep2_MirrorRune(t *testing.T) {
+func TestStep3_MirrorRune(t *testing.T) {
 	pairs := []struct{ in, want rune }{
 		{'(', ')'}, {')', '('},
 		{'[', ']'}, {']', '['},
@@ -75,7 +75,7 @@ func TestStep2_MirrorRune(t *testing.T) {
 	}
 }
 
-func TestStep2_Mirror(t *testing.T) {
+func TestStep3_Mirror(t *testing.T) {
 	in := []string{
 		`(o>`,
 		`/| `,
@@ -92,31 +92,8 @@ func TestStep2_Mirror(t *testing.T) {
 	}
 }
 
-func TestStep2_MyColor(t *testing.T) {
+func TestStep3_MyColor(t *testing.T) {
 	if _, ok := ColorFor(Color); !ok {
 		t.Errorf("Color = %q is not a known colour", Color)
-	}
-}
-
-func TestStep2_ParseCommand(t *testing.T) {
-	tests := []struct {
-		in      string
-		want    Command
-		wantArg string
-	}{
-		{"hello all", CommandSay, "hello all"},
-		{"  hi  ", CommandSay, "hi"},
-		{"/wave", CommandEmote, "wave"},
-		{"/confetti", CommandEmote, "confetti"},
-		{"/status lunch break", CommandStatus, "lunch break"},
-		{"/status", CommandStatus, ""},
-		{"/highfive", CommandHighFive, ""},
-		{"/fly", CommandUnknown, "fly"},
-	}
-	for _, tt := range tests {
-		got, arg := ParseCommand(tt.in)
-		if got != tt.want || arg != tt.wantArg {
-			t.Errorf("ParseCommand(%q) = %v, %q; want %v, %q", tt.in, got, arg, tt.want, tt.wantArg)
-		}
 	}
 }

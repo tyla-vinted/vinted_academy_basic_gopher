@@ -1,6 +1,6 @@
 package avatar
 
-// Step 6: errors. The sentinel errors are in provided.go.
+// Step 8: errors. The sentinel errors are in provided.go.
 // Check: make check
 
 // ValidationError tells which part of your avatar is wrong and why.
@@ -25,7 +25,7 @@ func CheckMessage(msg string) error {
 
 // CheckHighFive returns an error that wraps ErrTooFar when me cannot
 // high-five other, with the text "high-five with <name>: too far away".
-// Use your CanHighFive from step 3.
+// Use your CanHighFive from step 5.
 func CheckHighFive(me, other Avatar) error {
 	return nil // TODO
 }

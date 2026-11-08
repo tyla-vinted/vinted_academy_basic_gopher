@@ -2,8 +2,8 @@ package avatar
 
 import "strings"
 
-// Step 7: testing. Greet has no tests yet, and it has bugs.
-// Write a table-driven test in step7_testing_test.go, find the bugs, fix them.
+// Step 9: testing. Greet has no tests yet, and it has bugs.
+// Write a table-driven test in step9_testing_test.go, find the bugs, fix them.
 // Check: make check
 
 // Greet returns the line that you see when you walk up to other.

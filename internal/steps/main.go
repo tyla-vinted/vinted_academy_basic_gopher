@@ -29,17 +29,19 @@ const (
 	avatarDir = "avatar"
 	stepsDir  = ".steps"
 	lockedGo  = "avatar/locked.go"
-	lastStep  = 7
+	lastStep  = 9
 )
 
 var titles = map[int]string{
-	1: "variables, constants, functions",
-	2: "if, for, switch",
-	3: "structs and methods",
-	4: "pointers vs values",
-	5: "generics",
-	6: "errors",
-	7: "testing",
+	1: "functions with multiple return values",
+	2: "switch: walking",
+	3: "for loops and switch: how you look",
+	4: "if and strings: chat commands",
+	5: "structs and methods",
+	6: "pointers vs values",
+	7: "generics",
+	8: "errors",
+	9: "testing",
 }
 
 var emptyAfterBrace = regexp.MustCompile(`\{\n\s*\n`)
@@ -77,7 +79,7 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: steps check | next [-force] | final | goto <1-7> | gen")
+	fmt.Fprintln(os.Stderr, "usage: steps check | next [-force] | final | goto <1-9> | gen")
 	os.Exit(2)
 }
 

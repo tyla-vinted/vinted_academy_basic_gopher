@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Step 4: pointers vs values.
+// Step 6: pointers vs values.
 // Check: make check
 
 // SetStatus sets the status shown under your name, as in "/status lunch":

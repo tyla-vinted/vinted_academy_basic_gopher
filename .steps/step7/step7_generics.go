@@ -2,7 +2,7 @@ package avatar
 
 import "cmp"
 
-// Step 5: generics.
+// Step 7: generics.
 // Check: make check
 
 // ClampInt and ClampFloat are the same function twice. Write Clamp once, for

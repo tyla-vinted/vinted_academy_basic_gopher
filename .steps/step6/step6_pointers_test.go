@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestStep4_SetStatus(t *testing.T) {
+func TestStep6_SetStatus(t *testing.T) {
 	var me Avatar
 	me.SetStatus("  lunch  ")
 	if me.Status != "lunch" {
@@ -22,7 +22,7 @@ func TestStep4_SetStatus(t *testing.T) {
 	}
 }
 
-func TestStep4_Cooldown(t *testing.T) {
+func TestStep6_Cooldown(t *testing.T) {
 	start := time.Date(2026, 1, 1, 12, 0, 0, 0, time.UTC)
 	c := Cooldown{Every: 2 * time.Second}
 

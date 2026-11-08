@@ -2,7 +2,7 @@ package avatar
 
 import "image/color"
 
-// Step 2: if, for, switch.
+// Step 3: for loops and switch: how you look.
 // Check: make check
 
 var (
@@ -55,27 +55,4 @@ func MirrorRune(r rune) rune {
 func Mirror(rows []string) []string {
 	// TODO
 	return nil
-}
-
-type Command int
-
-const (
-	CommandSay Command = iota
-	CommandEmote
-	CommandStatus
-	CommandHighFive
-	CommandUnknown
-)
-
-// ParseCommand reads one line from the chat box. Trim spaces first.
-//
-//	"hello all"       → CommandSay,      "hello all"
-//	"/wave"           → CommandEmote,    "wave"      (any name in Emotes)
-//	"/status lunch"   → CommandStatus,   "lunch"     ("/status" alone → "")
-//	"/highfive"       → CommandHighFive, ""
-//	"/fly"            → CommandUnknown,  "fly"
-func ParseCommand(input string) (Command, string) {
-	// TODO: strings.TrimSpace, strings.HasPrefix and strings.Cut help here.
-	// slices.Contains(Emotes, word) tells you if word is an emote.
-	return CommandSay, ""
 }

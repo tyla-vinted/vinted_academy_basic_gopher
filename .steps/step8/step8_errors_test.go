@@ -7,14 +7,14 @@ import (
 	"testing"
 )
 
-func TestStep6_ValidationErrorMessage(t *testing.T) {
+func TestStep8_ValidationErrorMessage(t *testing.T) {
 	var err error = &ValidationError{Field: "Name", Reason: "must not be empty"}
 	if got, want := err.Error(), "Name: must not be empty"; got != want {
 		t.Errorf("Error() = %q, want %q", got, want)
 	}
 }
 
-func TestStep6_CheckMessage(t *testing.T) {
+func TestStep8_CheckMessage(t *testing.T) {
 	if err := CheckMessage("hello"); err != nil {
 		t.Errorf(`CheckMessage("hello") = %v, want nil`, err)
 	}
@@ -32,7 +32,7 @@ func TestStep6_CheckMessage(t *testing.T) {
 	}
 }
 
-func TestStep6_CheckHighFive(t *testing.T) {
+func TestStep8_CheckHighFive(t *testing.T) {
 	me := Avatar{Pos: Pos{0, 0}}
 	near := Avatar{Name: "Ada", Pos: Pos{10, 0}}
 	far := Avatar{Name: "Linus", Pos: Pos{500, 0}}
@@ -49,7 +49,7 @@ func TestStep6_CheckHighFive(t *testing.T) {
 	}
 }
 
-func TestStep6_ValidateName(t *testing.T) {
+func TestStep8_ValidateName(t *testing.T) {
 	tests := []struct {
 		name      string
 		in        string
@@ -84,7 +84,7 @@ func TestStep6_ValidateName(t *testing.T) {
 	}
 }
 
-func TestStep6_JoinHint(t *testing.T) {
+func TestStep8_JoinHint(t *testing.T) {
 	tests := []struct {
 		name string
 		err  error

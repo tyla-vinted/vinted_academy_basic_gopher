@@ -12,6 +12,10 @@ import (
 	"time"
 )
 
+func Direction(key string) (dx, dy int) {
+	return 0, 0
+}
+
 var (
 	Red    = color.RGBA{235, 80, 70, 255}
 	Orange = color.RGBA{245, 150, 50, 255}

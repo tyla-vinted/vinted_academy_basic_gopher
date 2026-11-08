@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestStep5_Clamp(t *testing.T) {
+func TestStep7_Clamp(t *testing.T) {
 	if got := Clamp(15, 0, 10); got != 10 {
 		t.Errorf("Clamp(15, 0, 10) = %v, want 10", got)
 	}
@@ -17,7 +17,7 @@ func TestStep5_Clamp(t *testing.T) {
 	}
 }
 
-func TestStep5_Filter(t *testing.T) {
+func TestStep7_Filter(t *testing.T) {
 	even := Filter([]int{1, 2, 3, 4, 5, 6}, func(n int) bool { return n%2 == 0 })
 	if want := []int{2, 4, 6}; !slices.Equal(even, want) {
 		t.Errorf("even numbers = %v, want %v", even, want)
@@ -38,7 +38,7 @@ func TestStep5_Filter(t *testing.T) {
 	}
 }
 
-func TestStep5_Ring(t *testing.T) {
+func TestStep7_Ring(t *testing.T) {
 	r := NewRing[string](3)
 	if r.Len() != 0 || len(r.Items()) != 0 {
 		t.Fatalf("new ring: Len() = %d, Items() = %q; want empty", r.Len(), r.Items())
@@ -70,7 +70,7 @@ func TestStep5_Ring(t *testing.T) {
 	}
 }
 
-func TestStep5_RingOfStructs(t *testing.T) {
+func TestStep7_RingOfStructs(t *testing.T) {
 	type line struct{ from, text string }
 	r := NewRing[line](2)
 	r.Push(line{"Ada", "hi"})

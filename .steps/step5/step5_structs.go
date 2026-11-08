@@ -1,6 +1,6 @@
 package avatar
 
-// Step 3: structs and methods.
+// Step 5: structs and methods.
 // Check: make check
 
 type Pos struct {

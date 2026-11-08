@@ -27,7 +27,7 @@ var (
 	ErrLobbyFull = errors.New("lobby is full")
 )
 
-// Errors for step 6.
+// Errors for step 8.
 var (
 	ErrEmptyMessage   = errors.New("message is empty")
 	ErrMessageTooLong = errors.New("message is too long")

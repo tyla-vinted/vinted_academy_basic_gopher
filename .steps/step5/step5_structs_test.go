@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestStep3_PosAdd(t *testing.T) {
+func TestStep5_PosAdd(t *testing.T) {
 	p := Pos{10, 20}
 	if got, want := p.Add(5, -5), (Pos{15, 15}); got != want {
 		t.Errorf("Pos{10, 20}.Add(5, -5) = %v, want %v", got, want)
@@ -15,7 +15,7 @@ func TestStep3_PosAdd(t *testing.T) {
 	}
 }
 
-func TestStep3_DistanceTo(t *testing.T) {
+func TestStep5_DistanceTo(t *testing.T) {
 	if got := (Pos{0, 0}).DistanceTo(Pos{3, 4}); got != 5 {
 		t.Errorf("distance (0,0)→(3,4) = %v, want 5", got)
 	}
@@ -24,7 +24,7 @@ func TestStep3_DistanceTo(t *testing.T) {
 	}
 }
 
-func TestStep3_CanHighFive(t *testing.T) {
+func TestStep5_CanHighFive(t *testing.T) {
 	a := Avatar{Pos: Pos{100, 100}}
 	tests := []struct {
 		at   Pos
@@ -43,7 +43,7 @@ func TestStep3_CanHighFive(t *testing.T) {
 	}
 }
 
-func TestStep3_CardLines(t *testing.T) {
+func TestStep5_CardLines(t *testing.T) {
 	tests := []struct {
 		a    Avatar
 		want []string
