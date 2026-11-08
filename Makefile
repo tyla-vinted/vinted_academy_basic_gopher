@@ -22,10 +22,9 @@ hint:
 test:
 	go test ./avatar/...
 
-## final: when all 9 steps pass, join the workshop lobby for the finale
+## final: join the workshop lobby for the finale, e.g. make final SERVER=https://abc.ngrok-free.app
 final:
 	@test -n "$(SERVER)" || (echo "usage: make final SERVER=https://<host>"; exit 1)
-	@go run ./internal/steps final
 	go run ./cmd -server $(SERVER)
 
 ## doctor: check that Go and the build work on this laptop

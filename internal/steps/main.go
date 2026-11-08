@@ -4,7 +4,6 @@
 //	go run ./internal/steps next         if they pass, unlock the next step
 //	go run ./internal/steps next -force  unlock the next step without the tests
 //	go run ./internal/steps hint         a hint for the first failing test
-//	go run ./internal/steps final        pass only when all steps are done
 //	go run ./internal/steps goto <n>     unlock up to step n, no tests (for the host)
 //	go run ./internal/steps gen          rewrite avatar/locked.go
 package main
@@ -59,8 +58,6 @@ func main() {
 		err = next(len(os.Args) > 2 && os.Args[2] == "-force")
 	case "hint":
 		err = hint()
-	case "final":
-		err = final()
 	case "goto":
 		if len(os.Args) < 3 {
 			usage()
@@ -82,7 +79,7 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: steps check | next [-force] | hint | final | goto <1-9> | gen")
+	fmt.Fprintln(os.Stderr, "usage: steps check | next [-force] | hint | goto <1-9> | gen")
 	os.Exit(2)
 }
 
@@ -141,16 +138,6 @@ func next(force bool) error {
 		fmt.Println("  " + f)
 	}
 	fmt.Println("\nWhen you are done: make check")
-	return nil
-}
-
-func final() error {
-	if n := current(); n < lastStep {
-		return fmt.Errorf("You are on step %d of %d. Finish all the steps first: make check, then make next", n, lastStep)
-	}
-	if !runTests() {
-		return fmt.Errorf("\nYour tests are your ticket to the lobby. Make them pass first")
-	}
 	return nil
 }
 
