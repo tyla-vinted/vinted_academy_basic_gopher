@@ -1,4 +1,4 @@
-module arena
+module basic_gopher
 
 go 1.23
 

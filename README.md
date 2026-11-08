@@ -1,4 +1,4 @@
-# Go Arena
+# Basic Gopher
 
 A shared 2D room. Everyone in the workshop walks around as their own ASCII-art character, talks in speech bubbles, emotes, and high-fives. You write the code that makes your avatar work. At the end, everyone joins one lobby.
 

@@ -13,11 +13,11 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 
-	"arena/avatar"
-	"arena/internal/engine"
-	"arena/internal/netclient"
-	"arena/internal/protocol"
-	"arena/internal/solo"
+	"basic_gopher/avatar"
+	"basic_gopher/internal/engine"
+	"basic_gopher/internal/netclient"
+	"basic_gopher/internal/protocol"
+	"basic_gopher/internal/solo"
 )
 
 func main() {
@@ -41,7 +41,7 @@ func main() {
 
 	var conn engine.Conn
 	var welcome protocol.ServerMsg
-	title := "Go Arena"
+	title := "Basic Gopher"
 	if name != "" {
 		title += " · " + name
 	}

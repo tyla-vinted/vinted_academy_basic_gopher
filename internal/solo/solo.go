@@ -6,7 +6,7 @@ package solo
 import (
 	"math"
 
-	"arena/internal/protocol"
+	"basic_gopher/internal/protocol"
 )
 
 const (

@@ -24,8 +24,8 @@ import (
 	"golang.org/x/image/font/gofont/gomonobold"
 	"golang.org/x/image/font/gofont/goregular"
 
-	"arena/avatar"
-	"arena/internal/protocol"
+	"basic_gopher/avatar"
+	"basic_gopher/internal/protocol"
 )
 
 const (

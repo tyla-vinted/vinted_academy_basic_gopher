@@ -3,7 +3,7 @@ package solo
 import (
 	"testing"
 
-	"arena/internal/protocol"
+	"basic_gopher/internal/protocol"
 )
 
 func TestEcho(t *testing.T) {

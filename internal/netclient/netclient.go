@@ -17,7 +17,7 @@ import (
 	"github.com/coder/websocket"
 	"github.com/coder/websocket/wsjson"
 
-	"arena/internal/protocol"
+	"basic_gopher/internal/protocol"
 )
 
 // Errors that Dial returns when the lobby rejects a join.

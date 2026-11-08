@@ -5,7 +5,7 @@ package avatar_test
 import (
 	"fmt"
 
-	"arena/avatar"
+	"basic_gopher/avatar"
 )
 
 // go test runs an Example and compares what it prints with the Output comment.
