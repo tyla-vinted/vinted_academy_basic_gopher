@@ -35,28 +35,6 @@ func TestStep3_ColorFor(t *testing.T) {
 	}
 }
 
-func TestStep3_NormalizeArt(t *testing.T) {
-	in := []string{
-		"ab",
-		"a\tb",
-		"é",
-		"",
-	}
-	want := []string{
-		"ab ",
-		"a?b",
-		"?  ",
-		"   ",
-	}
-	got := NormalizeArt(in)
-	if !slices.Equal(got, want) {
-		t.Errorf("NormalizeArt(%q)\n got %q\nwant %q", in, got, want)
-	}
-	if in[1] != "a\tb" {
-		t.Error("NormalizeArt changed its input; return new rows")
-	}
-}
-
 func TestStep3_MirrorRune(t *testing.T) {
 	pairs := []struct{ in, want rune }{
 		{'(', ')'}, {')', '('},

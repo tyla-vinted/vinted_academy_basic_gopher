@@ -79,4 +79,4 @@ Chat commands: `/wave`, `/dance`, `/confetti`, `/heart`, `/think`, `/status <tex
 
 Your name and your art come from `Me()` in `avatar/step1_basics.go`. The art is at most 5 rows of 10 characters, printable ASCII only, facing right. Write each row in backticks, so that `\` needs no escape. Your colour is the `Color` constant in step 3.
 
-Everyone in the lobby sees your character as **your** code draws it: `NormalizeArt` cleans it, `ColorFor` colours it, and `Mirror` turns it when you walk left.
+Everyone in the lobby sees your character as **your** code draws it: `ColorFor` colours it, and `Mirror` turns it when you walk left.

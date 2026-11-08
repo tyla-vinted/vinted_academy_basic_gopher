@@ -30,16 +30,6 @@ func ColorFor(name string) (c color.RGBA, ok bool) {
 	return color.RGBA{}, false
 }
 
-// NormalizeArt makes art safe to draw. It returns new rows, where:
-//   - each character that is not printable ASCII (' ' to '~') is '?'
-//   - every row is padded with spaces to the width of the widest row
-//
-// It does not change rows.
-func NormalizeArt(rows []string) []string {
-	// TODO: find the widest row first (count runes, not bytes).
-	return nil
-}
-
 // MirrorRune returns r as it looks in a mirror:
 //
 //	( ↔ )    [ ↔ ]    { ↔ }    < ↔ >    / ↔ \    b ↔ d    p ↔ q

@@ -45,10 +45,6 @@ func ColorFor(name string) (c color.RGBA, ok bool) {
 	return color.RGBA{}, false
 }
 
-func NormalizeArt(rows []string) []string {
-	return nil
-}
-
 func MirrorRune(r rune) rune {
 	return r
 }

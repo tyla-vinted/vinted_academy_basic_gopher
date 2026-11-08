@@ -38,10 +38,7 @@ func main() {
 			Y: 160 + rand.Float64()*(protocol.RoomH-280),
 		},
 	}
-	art := avatar.NormalizeArt(rawArt)
-	if art == nil {
-		art = rawArt // NormalizeArt is not written yet
-	}
+	art := engine.NormalizeArt(rawArt)
 	c, _ := avatar.ColorFor(avatar.Color)
 	look := protocol.Look{Art: art, ArtLeft: avatar.Mirror(art), Color: protocol.Pack(c)}
 

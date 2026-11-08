@@ -793,3 +793,28 @@ func truncate(s string, max int) string {
 	}
 	return string(r[:max-3]) + "..."
 }
+
+// NormalizeArt makes art safe to draw: each rune that is not printable ASCII
+// becomes '?', and every row is padded with spaces to the widest row, so
+// that a mirrored row lines up with the others.
+func NormalizeArt(rows []string) []string {
+	width := 0
+	for _, row := range rows {
+		width = max(width, len([]rune(row)))
+	}
+	out := make([]string, 0, len(rows))
+	for _, row := range rows {
+		line := make([]rune, 0, width)
+		for _, r := range row {
+			if r < ' ' || r > '~' {
+				r = '?'
+			}
+			line = append(line, r)
+		}
+		for len(line) < width {
+			line = append(line, ' ')
+		}
+		out = append(out, string(line))
+	}
+	return out
+}
