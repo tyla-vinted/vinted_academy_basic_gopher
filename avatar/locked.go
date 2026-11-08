@@ -12,8 +12,18 @@ import (
 	"time"
 )
 
-func Direction(key string) (dx, dy int) {
-	return 0, 0
+type Direction int
+
+const (
+	Stay Direction = iota
+	Up
+	Down
+	Left
+	Right
+)
+
+func DirectionFor(key string) Direction {
+	return Stay
 }
 
 var (

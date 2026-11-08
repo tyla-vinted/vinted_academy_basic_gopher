@@ -339,9 +339,16 @@ func (g *Game) updateKeys(now time.Time) {
 	x, y := g.me.Pos.X, g.me.Pos.Y
 	for _, k := range moveKeys {
 		if ebiten.IsKeyPressed(k.key) {
-			dx, dy := avatar.Direction(k.name)
-			x += float64(dx) * speed
-			y += float64(dy) * speed
+			switch avatar.DirectionFor(k.name) {
+			case avatar.Up:
+				y -= speed
+			case avatar.Down:
+				y += speed
+			case avatar.Left:
+				x -= speed
+			case avatar.Right:
+				x += speed
+			}
 		}
 	}
 	if x == g.me.Pos.X && y == g.me.Pos.Y {
@@ -357,7 +364,7 @@ func (g *Game) updateKeys(now time.Time) {
 	g.me.Pos = next
 }
 
-// moveKeys are the keys that the arena passes to avatar.Direction, by name.
+// moveKeys are the keys that the arena passes to avatar.DirectionFor, by name.
 var moveKeys = []struct {
 	key  ebiten.Key
 	name string

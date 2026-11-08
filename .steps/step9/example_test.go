@@ -9,8 +9,7 @@ import (
 )
 
 // go test runs an Example and compares what it prints with the Output comment.
-func ExampleDirection() {
-	dx, dy := avatar.Direction("w")
-	fmt.Println(dx, dy)
-	// Output: 0 -1
+func ExampleDirectionFor() {
+	fmt.Println(avatar.DirectionFor("w") == avatar.Up)
+	// Output: true
 }

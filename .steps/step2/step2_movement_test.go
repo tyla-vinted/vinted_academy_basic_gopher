@@ -2,26 +2,26 @@ package avatar
 
 import "testing"
 
-func TestStep2_Direction(t *testing.T) {
+func TestStep2_DirectionFor(t *testing.T) {
+	names := map[Direction]string{Stay: "Stay", Up: "Up", Down: "Down", Left: "Left", Right: "Right"}
 	tests := []struct {
-		key    string
-		dx, dy int
+		key  string
+		want Direction
 	}{
-		{"w", 0, -1},
-		{"up", 0, -1},
-		{"s", 0, 1},
-		{"down", 0, 1},
-		{"a", -1, 0},
-		{"left", -1, 0},
-		{"d", 1, 0},
-		{"right", 1, 0},
-		{"q", 0, 0},
-		{"", 0, 0},
+		{"w", Up},
+		{"up", Up},
+		{"s", Down},
+		{"down", Down},
+		{"a", Left},
+		{"left", Left},
+		{"d", Right},
+		{"right", Right},
+		{"q", Stay},
+		{"", Stay},
 	}
 	for _, tt := range tests {
-		dx, dy := Direction(tt.key)
-		if dx != tt.dx || dy != tt.dy {
-			t.Errorf("Direction(%q) = %d, %d; want %d, %d", tt.key, dx, dy, tt.dx, tt.dy)
+		if got := DirectionFor(tt.key); got != tt.want {
+			t.Errorf("DirectionFor(%q) = %s, want %s", tt.key, names[got], names[tt.want])
 		}
 	}
 }
