@@ -332,7 +332,7 @@ func (g *Game) updateKeys(now time.Time) {
 	}
 	for i, key := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3, ebiten.Key4, ebiten.Key5} {
 		if inpututil.IsKeyJustPressed(key) {
-			g.emote(avatar.Emotes[i], now)
+			g.emote(protocol.Emotes[i], now)
 		}
 	}
 
@@ -415,7 +415,7 @@ func (g *Game) submit(line string, now time.Time) {
 		return
 	}
 	if strings.HasPrefix(trimmed, "/") {
-		g.toast(fmt.Sprintf("Unknown command %s. Try /%s, /status <text>, /highfive.", trimmed, strings.Join(avatar.Emotes, " /")), colError, now)
+		g.toast(fmt.Sprintf("Unknown command %s. Try /%s, /status <text>, /highfive.", trimmed, strings.Join(protocol.Emotes, " /")), colError, now)
 		return
 	}
 	text, ok := avatar.Message(line)

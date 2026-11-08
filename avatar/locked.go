@@ -41,6 +41,10 @@ func Message(input string) (text string, ok bool) {
 	return "", false
 }
 
+var emotes = map[string]string{
+	"/wave": "wave",
+}
+
 func EmoteFor(input string) (emote string, ok bool) {
 	return "", false
 }
