@@ -29,6 +29,10 @@ func MirrorRune(r rune) rune {
 	return r
 }
 
+func ReverseString(s string) string {
+	return s
+}
+
 func Mirror(rows []string) []string {
 	return nil
 }

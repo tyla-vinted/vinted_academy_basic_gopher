@@ -23,6 +23,20 @@ func TestStep3_MirrorRune(t *testing.T) {
 	}
 }
 
+func TestStep3_ReverseString(t *testing.T) {
+	tests := []struct{ in, want string }{
+		{"abc", "cba"},
+		{"a", "a"},
+		{"", ""},
+		{"héllo", "olléh"},
+	}
+	for _, tt := range tests {
+		if got := ReverseString(tt.in); got != tt.want {
+			t.Errorf("ReverseString(%q) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}
+
 func TestStep3_Mirror(t *testing.T) {
 	in := []string{
 		`(o>`,

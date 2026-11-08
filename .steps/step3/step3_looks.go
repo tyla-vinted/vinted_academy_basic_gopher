@@ -13,9 +13,15 @@ func MirrorRune(r rune) rune {
 	return r
 }
 
+// ReverseString returns s with its runes in reverse order: "abc" → "cba".
+func ReverseString(s string) string {
+	// TODO
+	return s
+}
+
 // Mirror returns art flipped left to right: each row reversed, and each
 // rune mirrored with MirrorRune. The arena draws it when you walk left.
 func Mirror(rows []string) []string {
-	// TODO: a mirror also reverses each row: the last rune comes first.
+	// TODO: use ReverseString and MirrorRune.
 	return nil
 }
