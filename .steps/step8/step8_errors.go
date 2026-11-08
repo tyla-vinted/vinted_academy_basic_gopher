@@ -24,10 +24,10 @@ func checkCooldown(cd *Cooldown, now time.Time) error {
 	return nil // TODO
 }
 
-// HighFive checks a high-five before the arena sends it. It runs
-// checkDistance, then checkCooldown. At the first error it stops and returns
-// that error wrapped with fmt.Errorf and %w:
-// "high-five with <other's name>: <the error>". Otherwise it returns nil.
+// HighFive checks a high-five. It runs checkDistance, then checkCooldown.
+// At the first error it stops and returns the wrapped error with fmt.Errorf
+// and %w: "high-five with <other's name>: <the error>".
+// Otherwise, it returns nil.
 func HighFive(me, other Avatar, cd *Cooldown, now time.Time) error {
 	return nil // TODO
 }
