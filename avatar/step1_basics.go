@@ -10,15 +10,16 @@ func Name() string {
 
 // Art returns your avatar as ASCII art: at most 5 rows of 10 characters,
 // facing right, only the characters on a US keyboard. Write each row in
-// backticks, so that \ needs no escape. You can start from this gopher:
-//
-//	 n____n
-//	( O  O )
-//	(  ''  )/
-//	(______)
-//	  d  b
+// backticks, so that \ needs no escape. It is a gopher now: draw your own
+// if you like.
 func Art() []string {
-	return nil // TODO
+	return []string{
+		`  n____n  `,
+		` ( O  O ) `,
+		` (  ''  )/`,
+		` (______) `,
+		`   d  b   `,
+	}
 }
 
 // Me returns your name and your art. Use Name and Art.
