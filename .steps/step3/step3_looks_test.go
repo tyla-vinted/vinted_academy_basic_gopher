@@ -1,39 +1,9 @@
 package avatar
 
 import (
-	"image/color"
 	"slices"
 	"testing"
 )
-
-func TestStep3_ColorFor(t *testing.T) {
-	tests := []struct {
-		name   string
-		want   color.RGBA
-		wantOK bool
-	}{
-		{"red", Red, true},
-		{"orange", Orange, true},
-		{"yellow", Yellow, true},
-		{"green", Green, true},
-		{"blue", Blue, true},
-		{"cyan", Cyan, true},
-		{"purple", Purple, true},
-		{"pink", Pink, true},
-		{"white", White, true},
-		{"grey", Grey, true},
-		{"Cyan", Cyan, true},
-		{"GREEN", Green, true},
-		{"magenta", color.RGBA{}, false},
-		{"", color.RGBA{}, false},
-	}
-	for _, tt := range tests {
-		got, ok := ColorFor(tt.name)
-		if got != tt.want || ok != tt.wantOK {
-			t.Errorf("ColorFor(%q) = %v, %v; want %v, %v", tt.name, got, ok, tt.want, tt.wantOK)
-		}
-	}
-}
 
 func TestStep3_MirrorRune(t *testing.T) {
 	pairs := []struct{ in, want rune }{
@@ -67,11 +37,5 @@ func TestStep3_Mirror(t *testing.T) {
 	}
 	if in[0] != `(o>` {
 		t.Error("Mirror changed its input; return new rows")
-	}
-}
-
-func TestStep3_MyColor(t *testing.T) {
-	if _, ok := ColorFor(Color); !ok {
-		t.Errorf("Color = %q is not a known colour", Color)
 	}
 }

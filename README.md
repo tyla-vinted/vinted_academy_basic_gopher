@@ -42,9 +42,9 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 
 | Step | File | Topic | What you see in the arena |
 |---|---|---|---|
-| 1 | `step1_basics.go` | Functions, multiple return values | Your name and your ASCII art |
+| 1 | `step1_basics.go` | Functions, multiple return values | Your name and your ASCII art, in your colour |
 | 2 | `step2_movement.go` | Flow control (`switch`), enums (`iota`) | You walk (WASD or arrow keys) |
-| 3 | `step3_looks.go` | Maps, "comma ok", `for` loops | Your art in your colour, facing the way you walk |
+| 3 | `step3_looks.go` | `for` loops | Your art faces the way you walk |
 | 4 | `step4_commands.go` | `if`, strings | Chat commands like `/wave` |
 | 5 | `step5_structs.go` | Structs and methods | Name cards; high-fives |
 | 6 | `step6_pointers.go` | Pointers vs values | `/status` shows under your name; emote cooldown |
@@ -77,6 +77,6 @@ Chat commands: `/wave`, `/dance`, `/confetti`, `/heart`, `/think`, `/status <tex
 
 ## Your character
 
-Your name and your art come from `Me()` in `avatar/step1_basics.go`. The art is at most 5 rows of 10 characters, printable ASCII only, facing right. Write each row in backticks, so that `\` needs no escape. Your colour is the `Color` constant in step 3.
+Your name and your art come from `Me()` in `avatar/step1_basics.go`. The art is at most 5 rows of 10 characters, printable ASCII only, facing right. Write each row in backticks, so that `\` needs no escape. Your colour comes from `Color()`, in the same file.
 
-Everyone in the lobby sees your character as **your** code draws it: `ColorFor` colours it, and `Mirror` turns it when you walk left.
+Everyone in the lobby sees your character as **your** code draws it: `Mirror` turns it when you walk left.

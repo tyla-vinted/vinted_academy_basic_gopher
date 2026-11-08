@@ -39,7 +39,7 @@ func main() {
 		},
 	}
 	art := engine.NormalizeArt(rawArt)
-	c, _ := avatar.ColorFor(avatar.Color)
+	c := engine.ColorFor(avatar.Color())
 	look := protocol.Look{Art: art, ArtLeft: avatar.Mirror(art), Color: protocol.Pack(c)}
 
 	var conn engine.Conn

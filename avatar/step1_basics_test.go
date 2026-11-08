@@ -34,6 +34,13 @@ func TestStep1_Art(t *testing.T) {
 	}
 }
 
+func TestStep1_Color(t *testing.T) {
+	known := []string{"red", "orange", "yellow", "green", "blue", "cyan", "purple", "pink", "white", "grey"}
+	if c := Color(); !slices.Contains(known, strings.ToLower(c)) {
+		t.Errorf("Color returns %q; want one of %q", c, known)
+	}
+}
+
 func TestStep1_Me(t *testing.T) {
 	name, art := Me()
 	if name == "" || art == nil {

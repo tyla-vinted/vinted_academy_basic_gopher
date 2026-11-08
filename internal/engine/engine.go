@@ -818,3 +818,22 @@ func NormalizeArt(rows []string) []string {
 	}
 	return out
 }
+
+var palette = map[string]color.RGBA{
+	"red":    {235, 80, 70, 255},
+	"orange": {245, 150, 50, 255},
+	"yellow": {245, 210, 60, 255},
+	"green":  {100, 200, 100, 255},
+	"blue":   {90, 150, 245, 255},
+	"cyan":   {70, 210, 220, 255},
+	"purple": {180, 120, 240, 255},
+	"pink":   {245, 130, 190, 255},
+	"white":  {240, 240, 240, 255},
+	"grey":   {150, 155, 165, 255},
+}
+
+// ColorFor returns the colour for a name in any case. An unknown name gives
+// a transparent colour, which the arena draws grey.
+func ColorFor(name string) color.RGBA {
+	return palette[strings.ToLower(strings.TrimSpace(name))]
+}

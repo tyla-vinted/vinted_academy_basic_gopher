@@ -26,6 +26,12 @@ func Art() []string {
 	}
 }
 
+// Color returns the colour of your art: red, orange, yellow, green, blue,
+// cyan, purple, pink, white or grey.
+func Color() string {
+	return "" // TODO
+}
+
 // Me returns your name and your art.
 func Me() (name string, art []string) {
 	return "", nil // TODO
