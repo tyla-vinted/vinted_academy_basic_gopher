@@ -58,7 +58,7 @@ func Dial(ctx context.Context, addr string, join protocol.ClientMsg) (*Conn, pro
 		CompressionMode: websocket.CompressionContextTakeover,
 		HTTPHeader: http.Header{
 			"ngrok-skip-browser-warning": {"1"},
-			"User-Agent":                 {"go-arena"},
+			"User-Agent":                 {"basic-gopher"},
 		},
 	})
 	if err != nil {
