@@ -21,16 +21,14 @@ func TestStep4_Message(t *testing.T) {
 }
 
 func TestStep4_EmoteFor(t *testing.T) {
-	names := map[Emote]string{Wave: "Wave", Dance: "Dance", Confetti: "Confetti", Heart: "Heart", Think: "Think"}
+	names := map[Emote]string{Dance: "Dance", Confetti: "Confetti", Heart: "Heart"}
 	found := []struct {
 		in   string
 		want Emote
 	}{
-		{"/wave", Wave},
 		{"/dance", Dance},
 		{"/confetti", Confetti},
 		{"/heart", Heart},
-		{"/think", Think},
 		{"  /dance ", Dance},
 	}
 	for _, tt := range found {
@@ -39,7 +37,7 @@ func TestStep4_EmoteFor(t *testing.T) {
 			t.Errorf("EmoteFor(%q) = %s, %v; want %s, true", tt.in, names[got], ok, names[tt.want])
 		}
 	}
-	for _, in := range []string{"/fly", "wave", "/", "hello"} {
+	for _, in := range []string{"/fly", "/wave", "dance", "/", "hello"} {
 		if _, ok := EmoteFor(in); ok {
 			t.Errorf("EmoteFor(%q): ok is true; want false", in)
 		}

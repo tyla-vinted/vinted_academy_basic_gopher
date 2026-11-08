@@ -13,20 +13,18 @@ func Message(input string) (text string, ok bool) {
 type Emote int
 
 const (
-	Wave Emote = iota
-	Dance
+	Dance Emote = iota
 	Confetti
 	Heart
-	Think
 )
 
 // emotes maps each emote command to its emote.
 var emotes = map[string]Emote{
-	"/wave": Wave,
-	// TODO: "/dance", "/confetti", "/heart" and "/think"
+	"/dance": Dance,
+	// TODO: "/confetti" and "/heart"
 }
 
-// EmoteFor returns the emote for a command like "/wave". ok is false when
+// EmoteFor returns the emote for a command like "/dance". ok is false when
 // the command is not in emotes.
 func EmoteFor(input string) (emote Emote, ok bool) {
 	return 0, false // TODO

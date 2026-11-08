@@ -12,7 +12,7 @@ import (
 
 // Version is the protocol version. The server and the client each have a
 // copy of this package: change Version in both copies when the messages change.
-const Version = 1
+const Version = 2
 
 const (
 	RoomW = 1024
@@ -31,7 +31,7 @@ const (
 )
 
 // Emotes is the set of emotes that the server accepts.
-var Emotes = []string{"wave", "dance", "confetti", "heart", "think"}
+var Emotes = []string{"dance", "confetti", "heart"}
 
 func IsEmote(name string) bool {
 	return slices.Contains(Emotes, name)

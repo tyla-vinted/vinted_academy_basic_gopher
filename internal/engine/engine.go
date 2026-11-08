@@ -330,7 +330,7 @@ func (g *Game) updateKeys(now time.Time) {
 	if inpututil.IsKeyJustPressed(ebiten.KeyH) {
 		g.highFive(now)
 	}
-	for i, key := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3, ebiten.Key4, ebiten.Key5} {
+	for i, key := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3} {
 		if inpututil.IsKeyJustPressed(key) {
 			g.emote(protocol.Emotes[i], now)
 		}
@@ -625,11 +625,9 @@ func (g *Game) drawPerson(screen *ebiten.Image, p *person, now time.Time) {
 }
 
 var emoteLabel = map[string]string{
-	"wave":     "o/  *waves*",
 	"dance":    "\\o/ *dances*",
 	"confetti": "*confetti!*",
 	"heart":    "<3",
-	"think":    "hmm...",
 }
 
 func (g *Game) drawOverhead(screen *ebiten.Image, p *person, now time.Time) {

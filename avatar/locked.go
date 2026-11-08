@@ -44,15 +44,13 @@ func Message(input string) (text string, ok bool) {
 type Emote int
 
 const (
-	Wave Emote = iota
-	Dance
+	Dance Emote = iota
 	Confetti
 	Heart
-	Think
 )
 
 var emotes = map[string]Emote{
-	"/wave": Wave,
+	"/dance": Dance,
 }
 
 func EmoteFor(input string) (emote Emote, ok bool) {

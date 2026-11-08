@@ -45,7 +45,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 | 1 | `step1_basics.go` | Functions, multiple return values | Your name and your ASCII art, in your colour |
 | 2 | `step2_movement.go` | Flow control (`switch`), enums (`iota`) | You walk (WASD or arrow keys) |
 | 3 | `step3_looks.go` | `for` loops | Your art faces the way you walk |
-| 4 | `step4_chat.go` | `if`, strings, maps | Chat, and emote commands like `/wave` |
+| 4 | `step4_chat.go` | `if`, strings, maps | Chat, and emote commands like `/dance` |
 | 5 | `step5_structs.go` | Structs and methods | Name cards; high-fives |
 | 6 | `step6_pointers.go` | Pointers vs values | `/status` shows under your name; emote cooldown |
 | 7 | `step7_generics.go` | Generics | Chat history; the "Nearby" list |
@@ -71,9 +71,9 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 | Enter | Chat. Press Enter again to send, Esc to cancel. |
 | `/` | Type a command |
 | H | High-five the nearest person |
-| 1–5 | Emotes: wave, dance, confetti, heart, think |
+| 1–3 | Emotes: dance, confetti, heart |
 
-Chat commands: `/wave`, `/dance`, `/confetti`, `/heart`, `/think`, `/status <text>`, `/status` (clears it), `/highfive`.
+Chat commands: `/dance`, `/confetti`, `/heart`, `/status <text>`, `/status` (clears it), `/highfive`.
 
 ## Your character
 
