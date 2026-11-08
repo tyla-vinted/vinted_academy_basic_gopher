@@ -30,7 +30,7 @@ import (
 
 const (
 	artLineH     = 16 // pixels per row of ASCII art
-	cardRange    = 140
+	greetRange   = 140
 	nearbyRange  = 200
 	bubbleTime   = 6 * time.Second
 	emoteTime    = 2500 * time.Millisecond
@@ -575,7 +575,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	g.drawHUD(screen, now)
 	g.drawChat(screen)
-	g.drawCard(screen)
+	g.drawGreeting(screen)
 	g.drawInput(screen)
 	g.drawToasts(screen, now)
 
@@ -711,7 +711,7 @@ func (g *Game) drawChat(screen *ebiten.Image) {
 	}
 }
 
-func (g *Game) drawCard(screen *ebiten.Image) {
+func (g *Game) drawGreeting(screen *ebiten.Image) {
 	var best *person
 	bestD := math.Inf(1)
 	for id, p := range g.people {
@@ -722,30 +722,16 @@ func (g *Game) drawCard(screen *ebiten.Image) {
 			best, bestD = p, d
 		}
 	}
-	if best == nil || bestD > cardRange {
+	if best == nil || bestD > greetRange {
 		return
 	}
-	other := g.asAvatar(best)
-	lines := other.CardLines()
-	if len(lines) == 0 {
-		lines = []string{other.Name}
+	greet := truncate(avatar.Greet(*g.me, g.asAvatar(best)), 44)
+	_, h := g.artSize(best.art())
+	y := best.pos.Y + h/2 + 27
+	if best.info.Status != "" {
+		y += 17
 	}
-	greet := avatar.Greet(*g.me, other)
-
-	const w, lh = 330, 20
-	h := float32((len(lines)+1)*lh + 16)
-	x, y := float32(protocol.RoomW-w-8), float32(protocol.RoomH-44)-h
-	vector.DrawFilledRect(screen, x, y, w, h, colPanel, true)
-	vector.StrokeRect(screen, x, y, w, h, 1, colAccent, true)
-	for i, l := range lines {
-		face := g.font
-		if i == 0 {
-			face = g.bold
-		}
-		s := truncate(l, 44)
-		g.textAt(screen, s, face, float64(x+12), float64(y+8)+float64(i*lh), colText, false)
-	}
-	g.textAt(screen, greet, g.font, float64(x+12), float64(y+8)+float64(len(lines)*lh)+4, colAccent, false)
+	g.textAt(screen, greet, g.small, best.pos.X, y, colAccent, true)
 }
 
 func (g *Game) drawInput(screen *ebiten.Image) {

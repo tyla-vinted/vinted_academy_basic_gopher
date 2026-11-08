@@ -28,11 +28,3 @@ func (p Pos) DistanceTo(q Pos) float64 {
 func (a Avatar) CanHighFive(other Avatar) bool {
 	return false // TODO
 }
-
-// CardLines returns the text of the card that others see when they walk
-// close to you: your name, then "Status: <status>" when you have a status.
-//
-//	["Ada", "Status: lunch"]    or ["Ada"] with no status
-func (a Avatar) CardLines() []string {
-	return nil // TODO
-}

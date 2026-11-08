@@ -79,10 +79,6 @@ func (a Avatar) CanHighFive(other Avatar) bool {
 	return false
 }
 
-func (a Avatar) CardLines() []string {
-	return nil
-}
-
 func (a Avatar) SetStatus(s string) {
 	s = strings.TrimSpace(s)
 	if r := []rune(s); len(r) > MaxStatusLen {

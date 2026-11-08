@@ -1,9 +1,6 @@
 package avatar
 
-import (
-	"slices"
-	"testing"
-)
+import "testing"
 
 func TestStep5_PosAdd(t *testing.T) {
 	p := Pos{10, 20}
@@ -39,21 +36,6 @@ func TestStep5_CanHighFive(t *testing.T) {
 		b := Avatar{Pos: tt.at}
 		if got := a.CanHighFive(b); got != tt.want {
 			t.Errorf("CanHighFive from %v to %v = %v, want %v", a.Pos, tt.at, got, tt.want)
-		}
-	}
-}
-
-func TestStep5_CardLines(t *testing.T) {
-	tests := []struct {
-		a    Avatar
-		want []string
-	}{
-		{Avatar{Name: "Ada", Status: "lunch"}, []string{"Ada", "Status: lunch"}},
-		{Avatar{Name: "Ada"}, []string{"Ada"}},
-	}
-	for _, tt := range tests {
-		if got := tt.a.CardLines(); !slices.Equal(got, tt.want) {
-			t.Errorf("%+v.CardLines() = %q, want %q", tt.a, got, tt.want)
 		}
 	}
 }
