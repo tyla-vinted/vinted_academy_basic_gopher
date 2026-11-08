@@ -49,7 +49,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 | 5 | `step5_structs.go` | Structs and methods | High-fives: someone turns green when you are close enough, and H works |
 | 6 | `step6_pointers.go` | Pointers vs values | `/status` shows under your name; emotes have a cooldown |
 | 7 | `step7_generics.go` | Generics | Chat history; who is in reach, at the top left |
-| 8 | `step8_errors.go` | Errors: `error` values, the `if err != nil` flow, wrapping with `fmt.Errorf` | A failed high-five says why: too far, busy, or on cooldown |
+| 8 | `step8_errors.go` | Errors: `error` values, the `if err != nil` flow, wrapping with `fmt.Errorf` | A failed high-five says why: too far, or on cooldown |
 | 9 | `step9_testing.go` | Testing | Correct greetings when you walk up to someone |
 
 ## Commands

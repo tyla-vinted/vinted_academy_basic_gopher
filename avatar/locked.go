@@ -118,22 +118,7 @@ var (
 	ErrOnCooldown = errors.New("on cooldown")
 )
 
-type BusyError struct {
-	Name string
-}
-
-func (e *BusyError) Error() string {
-	return ""
-}
-
 func checkDistance(me, other Avatar) error {
-	return nil
-}
-
-func checkBusy(other Avatar) error {
-	if other.Status == "busy" {
-		return &BusyError{Name: other.Name}
-	}
 	return nil
 }
 
