@@ -5,12 +5,14 @@ import (
 	"time"
 )
 
-// Step 6: pointers vs values.
+// Step 6: pointers: your status and emote cooldown.
 // Check: make check
 
 // SetStatus sets the status shown under your name, as in "/status lunch":
 // s without the spaces around it, cut to MaxStatusLen characters.
 // An empty s clears the status.
+//
+// TODO: "/status lunch" does nothing. Find out why.
 func (a Avatar) SetStatus(s string) {
 	s = strings.TrimSpace(s)
 	if r := []rune(s); len(r) > MaxStatusLen {
@@ -27,6 +29,12 @@ type Cooldown struct {
 
 // Try reports whether the action may run at now. When it may, Try records
 // now as the last use. The first call always returns true.
-func (c *Cooldown) Try(now time.Time) bool {
-	return true // TODO
+//
+// TODO: the cooldown never starts. Find out why.
+func (c Cooldown) Try(now time.Time) bool {
+	if !c.last.IsZero() && now.Sub(c.last) < c.Every {
+		return false
+	}
+	c.last = now
+	return true
 }

@@ -38,7 +38,7 @@ var titles = map[int]string{
 	3: "for loops: facing left and right",
 	4: "if, strings and maps: chat and emotes",
 	5: "structs and methods: high-fives",
-	6: "pointers vs values",
+	6: "pointers: your status and emote cooldown",
 	7: "generics",
 	8: "errors",
 	9: "testing",

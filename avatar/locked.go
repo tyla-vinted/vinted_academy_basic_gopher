@@ -92,7 +92,11 @@ type Cooldown struct {
 	last  time.Time
 }
 
-func (c *Cooldown) Try(now time.Time) bool {
+func (c Cooldown) Try(now time.Time) bool {
+	if !c.last.IsZero() && now.Sub(c.last) < c.Every {
+		return false
+	}
+	c.last = now
 	return true
 }
 
