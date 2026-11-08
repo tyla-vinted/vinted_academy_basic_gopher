@@ -68,6 +68,9 @@ type Config struct {
 	Welcome protocol.ServerMsg
 	Me      *avatar.Avatar
 	Look    protocol.Look
+
+	// Greetings shows Greet under the person you walk up to (from step 9 on).
+	Greetings bool
 }
 
 type person struct {
@@ -716,6 +719,9 @@ func (g *Game) drawChat(screen *ebiten.Image) {
 }
 
 func (g *Game) drawGreeting(screen *ebiten.Image) {
+	if !g.cfg.Greetings {
+		return
+	}
 	var best *person
 	bestD := math.Inf(1)
 	for id, p := range g.people {

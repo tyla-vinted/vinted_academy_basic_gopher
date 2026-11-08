@@ -72,7 +72,8 @@ func main() {
 	ebiten.SetWindowTitle(title)
 	ebiten.SetWindowSize(protocol.RoomW, protocol.RoomH)
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
-	g := engine.New(engine.Config{Conn: conn, Welcome: welcome, Me: me, Look: look})
+	step9, _ := filepath.Glob("avatar/step9_*.go")
+	g := engine.New(engine.Config{Conn: conn, Welcome: welcome, Me: me, Look: look, Greetings: len(step9) > 0})
 	if err := ebiten.RunGame(g); err != nil {
 		log.Fatal(err)
 	}
