@@ -5,15 +5,20 @@ import (
 	"testing"
 )
 
-func TestStep7_Clamp(t *testing.T) {
-	if got := Clamp(15, 0, 10); got != 10 {
-		t.Errorf("Clamp(15, 0, 10) = %v, want 10", got)
+func TestStep7_Reverse(t *testing.T) {
+	nums := []int{1, 2, 3}
+	if got, want := Reverse(nums), []int{3, 2, 1}; !slices.Equal(got, want) {
+		t.Errorf("Reverse(%v) = %v, want %v", nums, got, want)
 	}
-	if got := Clamp(-2.5, 0.0, 1.0); got != 0 {
-		t.Errorf("Clamp(-2.5, 0, 1) = %v, want 0", got)
+	if !slices.Equal(nums, []int{1, 2, 3}) {
+		t.Errorf("Reverse changed its input to %v; return a new slice", nums)
 	}
-	if got := Clamp("m", "a", "z"); got != "m" {
-		t.Errorf(`Clamp("m", "a", "z") = %q, want "m"`, got)
+	words := []string{"a", "b"}
+	if got, want := Reverse(words), []string{"b", "a"}; !slices.Equal(got, want) {
+		t.Errorf("Reverse(%q) = %q, want %q", words, got, want)
+	}
+	if got := Reverse([]int{}); len(got) != 0 {
+		t.Errorf("Reverse of an empty slice = %v, want empty", got)
 	}
 }
 
@@ -23,14 +28,15 @@ func TestStep7_Filter(t *testing.T) {
 		t.Errorf("even numbers = %v, want %v", even, want)
 	}
 
+	me := Avatar{Name: "Me", Pos: Pos{0, 0}}
 	people := []Avatar{
-		{Name: "Ada", Pos: Pos{0, 0}},
+		{Name: "Ada", Pos: Pos{50, 0}},
 		{Name: "Linus", Pos: Pos{900, 900}},
-		{Name: "Grace", Pos: Pos{10, 10}},
+		{Name: "Grace", Pos: Pos{0, 80}},
 	}
-	near := Filter(people, func(a Avatar) bool { return a.Pos.DistanceTo(Pos{}) < 100 })
+	near := Filter(people, me.CanHighFive)
 	if len(near) != 2 || near[0].Name != "Ada" || near[1].Name != "Grace" {
-		t.Errorf("nearby = %+v, want Ada and Grace", near)
+		t.Errorf("Filter(people, me.CanHighFive) = %+v, want Ada and Grace", near)
 	}
 
 	if got := Filter([]string{"a"}, func(string) bool { return false }); len(got) != 0 {
@@ -38,46 +44,23 @@ func TestStep7_Filter(t *testing.T) {
 	}
 }
 
-func TestStep7_Ring(t *testing.T) {
-	r := NewRing[string](3)
-	if r.Len() != 0 || len(r.Items()) != 0 {
-		t.Fatalf("new ring: Len() = %d, Items() = %q; want empty", r.Len(), r.Items())
+func TestStep7_Last(t *testing.T) {
+	nums := []int{1, 2, 3, 4, 5}
+	tests := []struct {
+		n    int
+		want []int
+	}{
+		{2, []int{4, 5}},
+		{5, []int{1, 2, 3, 4, 5}},
+		{9, []int{1, 2, 3, 4, 5}},
+		{0, []int{}},
 	}
-
-	r.Push("a")
-	r.Push("b")
-	if want := []string{"a", "b"}; !slices.Equal(r.Items(), want) {
-		t.Errorf("after a, b: Items() = %q, want %q", r.Items(), want)
+	for _, tt := range tests {
+		if got := Last(nums, tt.n); !slices.Equal(got, tt.want) {
+			t.Errorf("Last(%v, %d) = %v, want %v", nums, tt.n, got, tt.want)
+		}
 	}
-
-	r.Push("c")
-	r.Push("d")
-	r.Push("e")
-	if want := []string{"c", "d", "e"}; !slices.Equal(r.Items(), want) {
-		t.Errorf("after a..e: Items() = %q, want %q", r.Items(), want)
-	}
-	if r.Len() != 3 {
-		t.Errorf("Len() = %d, want 3", r.Len())
-	}
-
-	items := r.Items()
-	if len(items) == 0 {
-		return
-	}
-	items[0] = "changed"
-	if r.Items()[0] != "c" {
-		t.Error("changing the slice from Items() changed the ring; return a new slice")
-	}
-}
-
-func TestStep7_RingOfStructs(t *testing.T) {
-	type line struct{ from, text string }
-	r := NewRing[line](2)
-	r.Push(line{"Ada", "hi"})
-	r.Push(line{"Linus", "hello"})
-	r.Push(line{"Grace", "hey"})
-	got := r.Items()
-	if len(got) != 2 || got[0].from != "Linus" || got[1].from != "Grace" {
-		t.Errorf("Items() = %+v, want Linus then Grace", got)
+	if got := Last([]string{"hi"}, 3); !slices.Equal(got, []string{"hi"}) {
+		t.Errorf(`Last([]string{"hi"}, 3) = %q, want ["hi"]`, got)
 	}
 }

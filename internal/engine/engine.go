@@ -31,7 +31,6 @@ import (
 const (
 	artLineH     = 16 // pixels per row of ASCII art
 	greetRange   = 140
-	nearbyRange  = 200
 	bubbleTime   = 6 * time.Second
 	emoteTime    = 2500 * time.Millisecond
 	toastTime    = 3500 * time.Millisecond
@@ -108,7 +107,7 @@ type Game struct {
 	you    string
 	me     *avatar.Avatar
 	people map[string]*person
-	chat   *avatar.Ring[chatLine]
+	chat   []chatLine
 
 	typing bool
 	input  []rune
@@ -143,7 +142,6 @@ func New(cfg Config) *Game {
 		you:     cfg.Welcome.You,
 		me:      cfg.Me,
 		people:  map[string]*person{},
-		chat:    avatar.NewRing[chatLine](chatLines),
 		emoteCD: avatar.Cooldown{Every: 2 * time.Second},
 		font:    &text.GoTextFace{Source: reg, Size: 14},
 		small:   &text.GoTextFace{Source: reg, Size: 12},
@@ -153,9 +151,6 @@ func New(cfg Config) *Game {
 		shotPath: os.Getenv("ARENA_SCREENSHOT"),
 	}
 	g.monoW, _ = text.Measure("M", g.mono, 0)
-	if g.chat == nil {
-		g.chat = &avatar.Ring[chatLine]{}
-	}
 	g.lastSent = g.me.Pos
 	self := protocol.PlayerInfo{
 		ID:      g.you,
@@ -280,7 +275,7 @@ func (g *Game) handle(m protocol.ServerMsg, now time.Time) {
 			return
 		}
 		p.bubble, p.bubbleUntil = truncate(m.Text, maxBubbleLen), now.Add(bubbleTime)
-		g.chat.Push(chatLine{from: p.info.Profile.Name, text: m.Text})
+		g.addChat(chatLine{from: p.info.Profile.Name, text: m.Text})
 	case protocol.TypeEmoted:
 		p, ok := g.people[m.From]
 		if !ok {
@@ -312,7 +307,7 @@ func (g *Game) handle(m protocol.ServerMsg, now time.Time) {
 		}
 	case protocol.TypeAnnounce:
 		g.showBanner(m.Text, now)
-		g.chat.Push(chatLine{from: "HOST", text: m.Text, system: true})
+		g.addChat(chatLine{from: "HOST", text: m.Text, system: true})
 	case protocol.TypeError:
 		g.toast(m.Text, colError, now)
 	}
@@ -492,8 +487,15 @@ func (g *Game) showBanner(s string, now time.Time) {
 	g.banner, g.bannerUntil = s, now.Add(bannerTime)
 }
 
+func (g *Game) addChat(l chatLine) {
+	g.chat = append(g.chat, l)
+	if len(g.chat) > 200 {
+		g.chat = g.chat[len(g.chat)-100:]
+	}
+}
+
 func (g *Game) system(s string) {
-	g.chat.Push(chatLine{text: s, system: true})
+	g.addChat(chatLine{text: s, system: true})
 }
 
 // ---------------------------------------------------------------- particles
@@ -669,21 +671,18 @@ func (g *Game) drawHUD(screen *ebiten.Image, now time.Time) {
 			others = append(others, g.asAvatar(p))
 		}
 	}
-	near := avatar.Filter(others, func(a avatar.Avatar) bool {
-		return g.me.Pos.DistanceTo(a.Pos) <= nearbyRange
-	})
-	names := make([]string, 0, len(near))
-	for _, a := range near {
+	inReach := avatar.Filter(others, g.me.CanHighFive)
+	names := make([]string, 0, len(inReach))
+	for _, a := range inReach {
 		names = append(names, a.Name)
 	}
 	sort.Strings(names)
-	nearby := "nobody"
 	if len(names) > 5 {
-		nearby = strings.Join(names[:5], ", ") + fmt.Sprintf(" +%d", len(names)-5)
-	} else if len(names) > 0 {
-		nearby = strings.Join(names, ", ")
+		names = append(names[:5], fmt.Sprintf("+%d", len(names)-5))
 	}
-	g.textAt(screen, "Nearby: "+nearby, g.small, 10, 8, colDim, false)
+	if len(names) > 0 {
+		g.textAt(screen, "In reach: "+strings.Join(names, ", "), g.small, 10, 8, colDim, false)
+	}
 
 	if now.Before(g.bannerUntil) && g.banner != "" {
 		w, h := text.Measure(g.banner, g.bold, 0)
@@ -694,7 +693,7 @@ func (g *Game) drawHUD(screen *ebiten.Image, now time.Time) {
 }
 
 func (g *Game) drawChat(screen *ebiten.Image) {
-	lines := g.chat.Items()
+	lines := avatar.Last(g.chat, chatLines)
 	const lh, w = 18, 420
 	h := float32(len(lines)*lh + 10)
 	y0 := float32(protocol.RoomH - 44)

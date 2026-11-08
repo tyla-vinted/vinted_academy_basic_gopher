@@ -6,7 +6,6 @@
 package avatar
 
 import (
-	"cmp"
 	"strings"
 	"time"
 )
@@ -101,52 +100,15 @@ func (c Cooldown) Try(now time.Time) bool {
 	return true
 }
 
-func ClampInt(v, lo, hi int) int {
-	if v < lo {
-		return lo
-	}
-	if v > hi {
-		return hi
-	}
-	return v
-}
-
-func ClampFloat(v, lo, hi float64) float64 {
-	if v < lo {
-		return lo
-	}
-	if v > hi {
-		return hi
-	}
-	return v
-}
-
-func Clamp[T cmp.Ordered](v, lo, hi T) T {
-	return v
+func Reverse[T any](xs []T) []T {
+	return xs
 }
 
 func Filter[T any](xs []T, keep func(T) bool) []T {
 	return nil
 }
 
-type Ring[T any] struct {
-	buf   []T
-	start int
-	size  int
-}
-
-func NewRing[T any](n int) *Ring[T] {
-	return &Ring[T]{}
-}
-
-func (r *Ring[T]) Push(v T) {
-}
-
-func (r *Ring[T]) Len() int {
-	return 0
-}
-
-func (r *Ring[T]) Items() []T {
+func Last[T any](xs []T, n int) []T {
 	return nil
 }
 
