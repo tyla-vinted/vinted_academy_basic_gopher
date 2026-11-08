@@ -2,7 +2,7 @@ package avatar
 
 import "image/color"
 
-// Step 3: for loops and switch: how you look.
+// Step 3: maps and for loops: how you look.
 // Check: make check
 
 var (
@@ -22,11 +22,16 @@ var (
 // purple, pink, white or grey.
 const Color = "cyan"
 
-// ColorFor returns the colour for a name, in any case ("Cyan" and "cyan"
-// are the same): red, orange, yellow, green, blue, cyan, purple, pink,
-// white, grey. For any other name, ok is false.
+// palette maps each colour name to its colour.
+var palette = map[string]color.RGBA{
+	"red": Red,
+	// TODO: the other colours
+}
+
+// ColorFor returns the colour for a name, in any case ("Cyan" and "cyan" are
+// the same). For a name that is not in palette, ok is false.
 func ColorFor(name string) (c color.RGBA, ok bool) {
-	// TODO: strings.ToLower, then a switch.
+	// TODO: look the name up in palette. A map lookup can return two values.
 	return color.RGBA{}, false
 }
 

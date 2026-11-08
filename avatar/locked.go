@@ -41,6 +41,10 @@ var (
 
 const Color = "cyan"
 
+var palette = map[string]color.RGBA{
+	"red": Red,
+}
+
 func ColorFor(name string) (c color.RGBA, ok bool) {
 	return color.RGBA{}, false
 }
