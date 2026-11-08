@@ -20,7 +20,7 @@ A shared 2D room. Everyone in the workshop walks around as their own ASCII-art c
    make run
    ```
 
-   Expected result: a window opens with a grey `[?]`. That is you. You cannot walk yet: that is your first task.
+   Expected result: a window opens with a grey `[?]`. That is you. Your name, colour and art come in step 1, and walking in step 2.
 
 On Linux, Ebitengine needs some system packages. See <https://ebitengine.org/en/documents/install.html>.
 
@@ -36,7 +36,7 @@ You start with step 1 only. Each step is a file with `// TODO`s and a test file.
 2. Run `make check`. Expected result: `Step N is done`. If a test fails, the output tells you what to fix.
 3. Run `make next`. Expected result: the next step's files appear in `avatar/`.
 
-`make next` runs the tests first, and it unlocks the next step only when they pass.
+`make next` runs the tests first, and it unlocks the next step only when they pass. Stuck? Run `make hint` for a hint about the first failing test.
 
 Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked yet, and `make next` rewrites it.
 
@@ -56,7 +56,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 
 | Command | What it does |
 |---|---|
-| `make run` | Opens the arena in solo mode: no server. Chat, emotes and status work. In step 5, your `NewAvatar` puts a dummy in the room for you to high-five, named after you (for example "Ada Jr"). |
+| `make run` | Opens the arena in solo mode: no server. Each step adds something you can see. In step 5, your `NewAvatar` puts a dummy in the room for you to high-five, named after you (for example "Ada Jr"). |
 | `make check` | Tests the steps that you have, and tells you what to do next. |
 | `make next` | If your steps pass, unlocks the next step. |
 | `make hint` | Gives a hint for the first failing test. Run it again for the next hint. |
