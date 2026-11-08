@@ -23,7 +23,7 @@ func main() {
 	flag.Parse()
 	online := strings.TrimSpace(*server) != ""
 
-	name, rawArt := avatar.Me()
+	name, colorName, rawArt := avatar.Me()
 	name = strings.TrimSpace(name)
 	if online {
 		if err := avatar.ValidateName(name); err != nil {
@@ -39,7 +39,7 @@ func main() {
 		},
 	}
 	art := engine.NormalizeArt(rawArt)
-	c := engine.ColorFor(avatar.Color())
+	c := engine.ColorFor(colorName)
 	look := protocol.Look{Art: art, ArtLeft: avatar.Mirror(art), Color: protocol.Pack(c)}
 
 	var conn engine.Conn

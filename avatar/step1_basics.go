@@ -32,7 +32,7 @@ func Color() string {
 	return "" // TODO
 }
 
-// Me returns your name and your art.
-func Me() (name string, art []string) {
-	return "", nil // TODO
+// Me returns your name, your colour and your art.
+func Me() (name, color string, art []string) {
+	return "", "", nil // TODO
 }

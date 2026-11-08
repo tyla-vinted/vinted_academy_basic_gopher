@@ -42,12 +42,15 @@ func TestStep1_Color(t *testing.T) {
 }
 
 func TestStep1_Me(t *testing.T) {
-	name, art := Me()
-	if name == "" || art == nil {
-		t.Fatalf("Me returns %q, %q; want your name and your art", name, art)
+	name, color, art := Me()
+	if name == "" || color == "" || art == nil {
+		t.Fatalf("Me returns %q, %q, %q; want your name, your colour and your art", name, color, art)
 	}
 	if name != Name() {
 		t.Errorf("Me returns the name %q; want %q, the same as Name", name, Name())
+	}
+	if color != Color() {
+		t.Errorf("Me returns the colour %q; want %q, the same as Color", color, Color())
 	}
 	if !slices.Equal(art, Art()) {
 		t.Errorf("Me returns other art than Art")
