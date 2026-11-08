@@ -43,8 +43,7 @@ const (
 )
 
 var (
-	colFloor    = color.RGBA{36, 40, 52, 255}
-	colGrid     = color.RGBA{44, 49, 63, 255}
+	colFloor    = color.RGBA{28, 42, 36, 255}
 	colPanel    = color.RGBA{16, 18, 24, 210}
 	colText     = color.RGBA{230, 232, 238, 255}
 	colDim      = color.RGBA{150, 156, 170, 255}
@@ -127,6 +126,7 @@ type Game struct {
 	frame      int
 
 	font, small, bold, mono *text.GoTextFace
+	bg                      *ebiten.Image
 	monoW                   float64
 
 	shotPath string // ARENA_SCREENSHOT: save one frame as PNG, then quit
@@ -552,13 +552,10 @@ func (g *Game) updateParticles() {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	now := time.Now()
-	screen.Fill(colFloor)
-	for x := 0; x < protocol.RoomW; x += 64 {
-		vector.DrawFilledRect(screen, float32(x), 0, 1, protocol.RoomH, colGrid, false)
+	if g.bg == nil {
+		g.bg = g.park()
 	}
-	for y := 0; y < protocol.RoomH; y += 64 {
-		vector.DrawFilledRect(screen, 0, float32(y), protocol.RoomW, 1, colGrid, false)
-	}
+	screen.DrawImage(g.bg, nil)
 
 	order := make([]*person, 0, len(g.people))
 	for _, p := range g.people {
@@ -845,4 +842,43 @@ var palette = map[string]color.RGBA{
 // a transparent colour, which the arena draws grey.
 func ColorFor(name string) color.RGBA {
 	return palette[strings.ToLower(strings.TrimSpace(name))]
+}
+
+// park draws the background once: grass, flowers, trees and a pond, all in
+// ASCII and dim, so that people and text stay the brightest things. The seed
+// is fixed, so every laptop draws the same park.
+func (g *Game) park() *ebiten.Image {
+	img := ebiten.NewImage(protocol.RoomW, protocol.RoomH)
+	img.Fill(colFloor)
+	r := rand.New(rand.NewPCG(2026, 11))
+
+	grass := color.RGBA{48, 70, 58, 255}
+	tufts := []string{",", "'", "\"", ".", ",,"}
+	for range 320 {
+		g.textAt(img, tufts[r.IntN(len(tufts))], g.mono, r.Float64()*protocol.RoomW, r.Float64()*protocol.RoomH, grass, false)
+	}
+
+	petals := []color.RGBA{{170, 95, 125, 255}, {175, 155, 80, 255}, {95, 130, 175, 255}, {165, 165, 175, 255}}
+	blooms := []string{"*", "@", "o"}
+	for range 45 {
+		g.textAt(img, blooms[r.IntN(len(blooms))], g.mono, r.Float64()*protocol.RoomW, 40+r.Float64()*(protocol.RoomH-80), petals[r.IntN(len(petals))], false)
+	}
+
+	leaves := color.RGBA{55, 105, 65, 255}
+	trunk := color.RGBA{105, 80, 55, 255}
+	tree := []string{`  ,@@@,  `, ` @@@@@@@ `, `@@@@@@@@@`, ` '@@@@@' `}
+	for _, at := range [][2]float64{{30, 60}, {protocol.RoomW - 130, 70}, {protocol.RoomW/2 - 260, 420}, {protocol.RoomW - 220, protocol.RoomH - 200}} {
+		for i, row := range tree {
+			g.textAt(img, row, g.mono, at[0], at[1]+float64(i*artLineH), leaves, false)
+		}
+		g.textAt(img, "    |", g.mono, at[0], at[1]+float64(len(tree)*artLineH), trunk, false)
+		g.textAt(img, "   /|\\", g.mono, at[0], at[1]+float64((len(tree)+1)*artLineH), trunk, false)
+	}
+
+	water := color.RGBA{70, 110, 150, 255}
+	pond := []string{`  .-~~~~~-.  `, ` ( ~  ~  ~ ) `, `(  ~  ~  ~  )`, ` '-.~~~~~.-' `}
+	for i, row := range pond {
+		g.textAt(img, row, g.mono, protocol.RoomW/2+60, 80+float64(i*artLineH), water, false)
+	}
+	return img
 }
