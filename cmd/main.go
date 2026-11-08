@@ -23,7 +23,8 @@ func main() {
 	flag.Parse()
 	online := strings.TrimSpace(*server) != ""
 
-	name := strings.TrimSpace(avatar.Name)
+	name, rawArt := avatar.Me()
+	name = strings.TrimSpace(name)
 	if online {
 		if err := avatar.ValidateName(name); err != nil {
 			fail(err)
@@ -37,7 +38,10 @@ func main() {
 			Y: 160 + rand.Float64()*(protocol.RoomH-280),
 		},
 	}
-	art := avatar.NormalizeArt(avatar.Art)
+	art := avatar.NormalizeArt(rawArt)
+	if art == nil {
+		art = rawArt // NormalizeArt is not written yet
+	}
 	c, _ := avatar.ColorFor(avatar.Color)
 	look := protocol.Look{Art: art, ArtLeft: avatar.Mirror(art), Color: protocol.Pack(c)}
 

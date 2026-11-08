@@ -90,10 +90,10 @@ func TestStep6_JoinHint(t *testing.T) {
 		err  error
 		want string
 	}{
-		{"name taken", fmt.Errorf("join wss://x: %w", ErrNameTaken), "Someone has this name already. Change Name in avatar/me.go."},
-		{"wrapped twice", fmt.Errorf("arena: %w", fmt.Errorf("join: %w", ErrNameTaken)), "Someone has this name already. Change Name in avatar/me.go."},
+		{"name taken", fmt.Errorf("join wss://x: %w", ErrNameTaken), "Someone has this name already. Change the name that Me returns."},
+		{"wrapped twice", fmt.Errorf("arena: %w", fmt.Errorf("join: %w", ErrNameTaken)), "Someone has this name already. Change the name that Me returns."},
 		{"lobby full", fmt.Errorf("join: %w", ErrLobbyFull), "The lobby is full. Ask the host."},
-		{"validation", fmt.Errorf("join: %w", &ValidationError{Field: "Name", Reason: "must not be empty"}), "Fix Name in avatar/me.go: must not be empty."},
+		{"validation", fmt.Errorf("join: %w", &ValidationError{Field: "Name", Reason: "must not be empty"}), "Fix Name in Me: must not be empty."},
 		{"other", errors.New("connection refused"), ""},
 	}
 	for _, tt := range tests {

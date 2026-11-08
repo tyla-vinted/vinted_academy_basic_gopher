@@ -25,6 +25,8 @@ var (
 	Grey   = color.RGBA{150, 155, 165, 255}
 )
 
+const Color = "cyan"
+
 func ColorFor(name string) (c color.RGBA, ok bool) {
 	return color.RGBA{}, false
 }

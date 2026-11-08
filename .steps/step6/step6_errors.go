@@ -3,7 +3,7 @@ package avatar
 // Step 6: errors. The sentinel errors are in provided.go.
 // Check: make check
 
-// ValidationError tells which field in avatar/me.go is wrong and why.
+// ValidationError tells which part of your avatar is wrong and why.
 type ValidationError struct {
 	Field  string
 	Reason string
@@ -41,9 +41,9 @@ func ValidateName(name string) error {
 
 // JoinHint turns a join error into advice for the terminal. The error can be
 // wrapped any number of times.
-//   - ErrNameTaken       → "Someone has this name already. Change Name in avatar/me.go."
+//   - ErrNameTaken       → "Someone has this name already. Change the name that Me returns."
 //   - ErrLobbyFull       → "The lobby is full. Ask the host."
-//   - *ValidationError   → "Fix <Field> in avatar/me.go: <Reason>."
+//   - *ValidationError   → "Fix <Field> in Me: <Reason>."
 //   - anything else      → ""
 func JoinHint(err error) string {
 	return "" // TODO

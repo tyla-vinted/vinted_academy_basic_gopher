@@ -92,20 +92,7 @@ func TestStep2_Mirror(t *testing.T) {
 	}
 }
 
-func TestStep2_ArtOfMe(t *testing.T) {
-	if len(Art) == 0 || len(Art) > MaxArtRows {
-		t.Errorf("Art has %d rows; want 1-%d", len(Art), MaxArtRows)
-	}
-	for i, row := range Art {
-		if n := len([]rune(row)); n > MaxArtCols {
-			t.Errorf("Art[%d] has %d characters; want at most %d", i, n, MaxArtCols)
-		}
-		for _, r := range row {
-			if r < ' ' || r > '~' {
-				t.Errorf("Art[%d] has %q; use only printable ASCII", i, r)
-			}
-		}
-	}
+func TestStep2_MyColor(t *testing.T) {
 	if _, ok := ColorFor(Color); !ok {
 		t.Errorf("Color = %q is not a known colour", Color)
 	}

@@ -100,7 +100,7 @@ func joinError(m protocol.ServerMsg) error {
 	}
 }
 
-// fieldName maps a server field name to the Go constant in avatar/me.go.
+// fieldName maps a server field name to the name that learners know.
 func fieldName(f string) string {
 	switch f {
 	case "name":

@@ -18,6 +18,10 @@ var (
 	Grey   = color.RGBA{150, 155, 165, 255}
 )
 
+// Color is the colour of your art: red, orange, yellow, green, blue, cyan,
+// purple, pink, white or grey.
+const Color = "cyan"
+
 // ColorFor returns the colour for a name, in any case ("Cyan" and "cyan"
 // are the same): red, orange, yellow, green, blue, cyan, purple, pink,
 // white, grey. For any other name, ok is false.
