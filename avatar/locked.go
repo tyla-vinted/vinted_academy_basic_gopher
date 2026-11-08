@@ -41,12 +41,22 @@ func Message(input string) (text string, ok bool) {
 	return "", false
 }
 
-var emotes = map[string]string{
-	"/wave": "wave",
+type Emote int
+
+const (
+	Wave Emote = iota
+	Dance
+	Confetti
+	Heart
+	Think
+)
+
+var emotes = map[string]Emote{
+	"/wave": Wave,
 }
 
-func EmoteFor(input string) (emote string, ok bool) {
-	return "", false
+func EmoteFor(input string) (emote Emote, ok bool) {
+	return 0, false
 }
 
 type Pos struct {

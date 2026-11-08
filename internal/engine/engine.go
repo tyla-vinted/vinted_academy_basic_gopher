@@ -411,7 +411,11 @@ func (g *Game) submit(line string, now time.Time) {
 		return
 	}
 	if emote, ok := avatar.EmoteFor(line); ok {
-		g.emote(emote, now)
+		if int(emote) < 0 || int(emote) >= len(protocol.Emotes) {
+			g.toast("That emote does not exist in the lobby.", colError, now)
+			return
+		}
+		g.emote(protocol.Emotes[emote], now)
 		return
 	}
 	if strings.HasPrefix(trimmed, "/") {

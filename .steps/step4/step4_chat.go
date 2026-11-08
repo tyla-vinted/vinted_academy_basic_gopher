@@ -9,14 +9,25 @@ func Message(input string) (text string, ok bool) {
 	return "", false // TODO
 }
 
-// emotes maps each emote command to the emote that it plays.
-var emotes = map[string]string{
-	"/wave": "wave",
+// Emote is an animation that everyone around you sees.
+type Emote int
+
+const (
+	Wave Emote = iota
+	Dance
+	Confetti
+	Heart
+	Think
+)
+
+// emotes maps each emote command to its emote.
+var emotes = map[string]Emote{
+	"/wave": Wave,
 	// TODO: "/dance", "/confetti", "/heart" and "/think"
 }
 
 // EmoteFor returns the emote for a command like "/wave". ok is false when
 // the command is not in emotes.
-func EmoteFor(input string) (emote string, ok bool) {
-	return "", false // TODO
+func EmoteFor(input string) (emote Emote, ok bool) {
+	return 0, false // TODO
 }
