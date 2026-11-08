@@ -24,7 +24,7 @@ func (p Pos) DistanceTo(q Pos) float64 {
 	return 0 // TODO
 }
 
-// CanHighFive reports whether other is at most HighFiveRange away from a.
+// CanHighFive reports whether other is at most 100 pixels away from a.
 func (a Avatar) CanHighFive(other Avatar) bool {
 	return false // TODO
 }
