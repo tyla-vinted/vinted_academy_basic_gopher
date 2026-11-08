@@ -1,6 +1,6 @@
 SERVER ?=
 
-.PHONY: run check next hint test online join doctor
+.PHONY: run check next hint test join doctor
 
 ## run: open the arena in solo mode (no server)
 run:
@@ -21,11 +21,6 @@ hint:
 ## test: run all tests, with less text than make check
 test:
 	go test ./avatar/...
-
-## online: join the workshop lobby, e.g. make online SERVER=https://abc.ngrok-free.app
-online:
-	@test -n "$(SERVER)" || (echo "usage: make online SERVER=https://<host>"; exit 1)
-	go run ./cmd -server $(SERVER)
 
 ## join: when all 9 steps pass, join the workshop lobby for the finale
 join:

@@ -61,7 +61,6 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 | `make next` | If your steps pass, unlocks the next step. |
 | `make hint` | Gives a hint for the first failing test. Run it again for the next hint. |
 | `make test` | Runs the tests, with less text than `make check`. |
-| `make online SERVER=<url>` | Joins the workshop lobby without the tests. Use it to try high-fives with your neighbours. |
 | `make join SERVER=<url>` | When all 9 steps pass, joins the workshop lobby for the finale. |
 
 ## Controls
