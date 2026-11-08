@@ -19,8 +19,7 @@ func ReverseString(s string) string {
 	return s
 }
 
-// Mirror returns art flipped left to right: each row reversed, and each
-// rune mirrored with MirrorRune. The arena draws it when you walk left.
+// Mirror returns art flipped left to right
 func Mirror(rows []string) []string {
 	// TODO: use ReverseString and MirrorRune.
 	return nil

@@ -19,13 +19,11 @@ func NewAvatar(name string, x, y float64) Avatar {
 }
 
 // DistanceTo returns the straight-line distance from p to q.
-// Hint: math.Hypot.
 func (p Pos) DistanceTo(q Pos) float64 {
 	return 0 // TODO
 }
 
-// CanHighFive reports whether other is at most 100.0 away from a, measured
-// with DistanceTo.
+// CanHighFive reports whether other is at most 100.0 away
 func (a Avatar) CanHighFive(other Avatar) bool {
 	return false // TODO
 }

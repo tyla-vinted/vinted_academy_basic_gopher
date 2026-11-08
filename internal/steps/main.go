@@ -33,8 +33,8 @@ const (
 )
 
 var titles = map[int]string{
-	1: "functions with multiple return values",
-	2: "flow control: walking",
+	1: "functions, single and multiple return values",
+	2: "flow control and enums: walking",
 	3: "for loops: facing left and right",
 	4: "if, strings and maps: chat and emotes",
 	5: "structs and methods: high-fives",
