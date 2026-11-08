@@ -9,8 +9,8 @@ import (
 )
 
 // go test runs an Example and compares what it prints with the Output comment.
-func ExampleTruncate() {
-	s, cut := avatar.Truncate("hello world", 8)
-	fmt.Println(s, cut)
-	// Output: hello... true
+func ExampleMove() {
+	x, y := avatar.Move(100, 100, 1, 0)
+	fmt.Println(x, y)
+	// Output: 103 100
 }

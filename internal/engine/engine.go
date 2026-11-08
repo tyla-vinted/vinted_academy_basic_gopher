@@ -38,6 +38,7 @@ const (
 	bannerTime   = 10 * time.Second
 	moveInterval = 66 * time.Millisecond
 	maxInput     = 120
+	maxBubbleLen = 40
 	chatLines    = 8
 )
 
@@ -274,11 +275,7 @@ func (g *Game) handle(m protocol.ServerMsg, now time.Time) {
 		if !ok {
 			return
 		}
-		b, _ := avatar.Truncate(m.Text, avatar.MaxBubbleLen)
-		if b == "" {
-			b = m.Text
-		}
-		p.bubble, p.bubbleUntil = b, now.Add(bubbleTime)
+		p.bubble, p.bubbleUntil = truncate(m.Text, maxBubbleLen), now.Add(bubbleTime)
 		g.chat.Push(chatLine{from: p.info.Profile.Name, text: m.Text})
 	case protocol.TypeEmoted:
 		p, ok := g.people[m.From]
@@ -679,10 +676,7 @@ func (g *Game) drawChat(screen *ebiten.Image) {
 	vector.DrawFilledRect(screen, 8, y0-h, w, h, colPanel, true)
 	for i, l := range lines {
 		y := float64(y0-h) + 5 + float64(i*lh)
-		s, _ := avatar.Truncate(l.text, 56)
-		if s == "" {
-			s = l.text
-		}
+		s := truncate(l.text, 56)
 		if l.system {
 			if l.from != "" {
 				s = l.from + ": " + s
@@ -731,10 +725,7 @@ func (g *Game) drawCard(screen *ebiten.Image) {
 		if i == 0 {
 			face = g.bold
 		}
-		s, _ := avatar.Truncate(l, 44)
-		if s == "" {
-			s = l
-		}
+		s := truncate(l, 44)
 		g.textAt(screen, s, face, float64(x+12), float64(y+8)+float64(i*lh), colText, false)
 	}
 	g.textAt(screen, greet, g.font, float64(x+12), float64(y+8)+float64(len(lines)*lh)+4, colAccent, false)
@@ -783,4 +774,13 @@ func (g *Game) textAt(dst *ebiten.Image, s string, face *text.GoTextFace, x, y f
 
 func withAlpha(c color.RGBA, a float32) color.Color {
 	return color.NRGBA{c.R, c.G, c.B, uint8(float32(255) * max(0, min(1, a)))}
+}
+
+// truncate cuts s to at most max runes, ending with "...".
+func truncate(s string, max int) string {
+	r := []rune(s)
+	if len(r) <= max {
+		return s
+	}
+	return string(r[:max-3]) + "..."
 }

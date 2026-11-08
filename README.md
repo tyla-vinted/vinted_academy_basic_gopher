@@ -42,7 +42,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 
 | Step | File | Topic | What you see in the arena |
 |---|---|---|---|
-| 1 | `me.go`, `step1_basics.go` | Variables, constants, multiple return values | You walk (WASD or arrow keys); your name; long messages cut with `...` |
+| 1 | `me.go`, `step1_basics.go` | Variables, constants, multiple return values | You walk (WASD or arrow keys); your name |
 | 2 | `step2_control.go` | `if`, `for`, `switch` | Your ASCII art in your colour, facing the way you walk; chat commands like `/wave` |
 | 3 | `step3_structs.go` | Structs and methods | Name cards; high-fives |
 | 4 | `step4_pointers.go` | Pointers vs values | `/status` shows under your name; emote cooldown |

@@ -28,24 +28,3 @@ func TestStep1_Move(t *testing.T) {
 		}
 	}
 }
-
-func TestStep1_Truncate(t *testing.T) {
-	tests := []struct {
-		in      string
-		max     int
-		want    string
-		wantCut bool
-	}{
-		{"hello", 10, "hello", false},
-		{"hello", 5, "hello", false},
-		{"hello world", 8, "hello...", true},
-		{"", 5, "", false},
-		{"ąžuolas ąžuolas", 10, "ąžuolas...", true},
-	}
-	for _, tt := range tests {
-		got, cut := Truncate(tt.in, tt.max)
-		if got != tt.want || cut != tt.wantCut {
-			t.Errorf("Truncate(%q, %d) = %q, %v; want %q, %v", tt.in, tt.max, got, cut, tt.want, tt.wantCut)
-		}
-	}
-}
