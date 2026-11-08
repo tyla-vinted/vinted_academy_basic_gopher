@@ -16,6 +16,6 @@ func MirrorRune(r rune) rune {
 // Mirror returns art flipped left to right: each row reversed, and each
 // rune mirrored with MirrorRune. The arena draws it when you walk left.
 func Mirror(rows []string) []string {
-	// TODO: slices.Reverse turns a slice around.
+	// TODO: a mirror also reverses each row: the last rune comes first.
 	return nil
 }
