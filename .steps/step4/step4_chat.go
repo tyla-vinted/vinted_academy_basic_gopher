@@ -4,7 +4,7 @@ package avatar
 // Check: make check
 
 // Message returns what you typed, without the spaces around it. ok is false
-// when nothing is left.
+// when the input is empty or only spaces.
 func Message(input string) (text string, ok bool) {
 	return "", false // TODO
 }
