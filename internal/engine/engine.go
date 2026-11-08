@@ -39,6 +39,7 @@ const (
 	moveInterval = 66 * time.Millisecond
 	maxInput     = 120
 	maxBubbleLen = 40
+	speed        = 3.0 // pixels per frame
 	chatLines    = 8
 )
 
@@ -338,7 +339,9 @@ func (g *Game) updateKeys(now time.Time) {
 	x, y := g.me.Pos.X, g.me.Pos.Y
 	for _, k := range moveKeys {
 		if ebiten.IsKeyPressed(k.key) {
-			x, y = avatar.Move(x, y, k.name)
+			dx, dy := avatar.Direction(k.name)
+			x += float64(dx) * speed
+			y += float64(dy) * speed
 		}
 	}
 	if x == g.me.Pos.X && y == g.me.Pos.Y {
@@ -354,7 +357,7 @@ func (g *Game) updateKeys(now time.Time) {
 	g.me.Pos = next
 }
 
-// moveKeys are the keys that the arena passes to avatar.Move, by name.
+// moveKeys are the keys that the arena passes to avatar.Direction, by name.
 var moveKeys = []struct {
 	key  ebiten.Key
 	name string

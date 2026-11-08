@@ -8,26 +8,26 @@ func TestStep1_MeIsFilledIn(t *testing.T) {
 	}
 }
 
-func TestStep1_Move(t *testing.T) {
+func TestStep1_Direction(t *testing.T) {
 	tests := []struct {
-		key          string
-		wantX, wantY float64
+		key    string
+		dx, dy int
 	}{
-		{"w", 100, 100 - Speed},
-		{"up", 100, 100 - Speed},
-		{"s", 100, 100 + Speed},
-		{"down", 100, 100 + Speed},
-		{"a", 100 - Speed, 100},
-		{"left", 100 - Speed, 100},
-		{"d", 100 + Speed, 100},
-		{"right", 100 + Speed, 100},
-		{"q", 100, 100},
-		{"", 100, 100},
+		{"w", 0, -1},
+		{"up", 0, -1},
+		{"s", 0, 1},
+		{"down", 0, 1},
+		{"a", -1, 0},
+		{"left", -1, 0},
+		{"d", 1, 0},
+		{"right", 1, 0},
+		{"q", 0, 0},
+		{"", 0, 0},
 	}
 	for _, tt := range tests {
-		x, y := Move(100, 100, tt.key)
-		if x != tt.wantX || y != tt.wantY {
-			t.Errorf("Move(100, 100, %q) = %v, %v; want %v, %v", tt.key, x, y, tt.wantX, tt.wantY)
+		dx, dy := Direction(tt.key)
+		if dx != tt.dx || dy != tt.dy {
+			t.Errorf("Direction(%q) = %d, %d; want %d, %d", tt.key, dx, dy, tt.dx, tt.dy)
 		}
 	}
 }
