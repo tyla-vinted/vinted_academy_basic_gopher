@@ -1,0 +1,80 @@
+# Go Arena
+
+A shared 2D room. Everyone in the workshop walks around as their own ASCII-art character, talks in speech bubbles, emotes, and high-fives. You write the code that makes your avatar work. At the end, everyone joins one lobby.
+
+## Before the workshop
+
+1. Install Go 1.23 or newer: <https://go.dev/dl/>.
+2. Clone this repository.
+3. Run the check:
+
+   ```sh
+   make doctor
+   ```
+
+   Expected result: `All good. Run: make run`.
+
+4. Run the arena in solo mode:
+
+   ```sh
+   make run
+   ```
+
+   Expected result: a window opens with a grey `[?]`. That is you. Walk with WASD or the arrow keys.
+
+On Linux, Ebitengine needs some system packages. See <https://ebitengine.org/en/documents/install.html>.
+
+On Windows without `make`, use the commands from the [Makefile](Makefile) directly, for example `go run ./cmd/arena`.
+
+## How the workshop works
+
+All your code is in the [`avatar/`](avatar) folder. The rest of the repository (rendering, network) is ready, and you do not have to read it.
+
+Each step has a file with `// TODO`s and a test file. The tests fail now. Make them pass, then run `make run` to see the result in the arena.
+
+| Step | File | Topic | What you see in the arena |
+|---|---|---|---|
+| 1 | [`me.go`](avatar/me.go), [`step1_basics.go`](avatar/step1_basics.go) | Variables, constants, shadowing, multiple return values | Your name; running with Shift; long messages cut with `...` |
+| 2 | [`step2_control.go`](avatar/step2_control.go) | `if`, `for`, `switch` | Your ASCII art in your colour, facing the way you walk; chat commands like `/wave` |
+| 3 | [`step3_structs.go`](avatar/step3_structs.go) | Structs and methods | Name cards; high-fives |
+| 4 | [`step4_pointers.go`](avatar/step4_pointers.go) | Pointers vs values | `/status` shows under your name; emote cooldown |
+| 5 | [`step5_generics.go`](avatar/step5_generics.go) | Generics | Chat history; the "Nearby" list |
+| 6 | [`step6_errors.go`](avatar/step6_errors.go) | Errors: `error` values, `fmt.Errorf`, `errors.Is`/`errors.As` | Clear error messages in the game and in the terminal |
+| 7 | [`step7_testing.go`](avatar/step7_testing.go) | Testing | Correct greetings on name cards |
+
+## Commands
+
+| Command | What it does |
+|---|---|
+| `make run` | Opens the arena in solo mode: only you, no server. Chat, emotes and status work. |
+| `make step STEP=3` | Runs the tests of step 3 only. |
+| `make test` | Runs all tests. |
+| `make online SERVER=<url>` | Joins the workshop lobby without the tests. Use it to try high-fives with your neighbours. |
+| `make join SERVER=<url>` | Runs all tests. If they pass, joins the workshop lobby. |
+
+## Controls
+
+| Key | Action |
+|---|---|
+| WASD or arrow keys | Move |
+| Shift | Run |
+| Enter | Chat. Press Enter again to send, Esc to cancel. |
+| `/` | Type a command |
+| H | High-five the nearest person |
+| 1–5 | Emotes: wave, dance, confetti, heart, think |
+
+Chat commands: `/wave`, `/dance`, `/confetti`, `/heart`, `/think`, `/status <text>`, `/status` (clears it), `/highfive`.
+
+## Your character
+
+Edit `Art` and `Color` in [`avatar/me.go`](avatar/me.go). `Art` is at most 5 rows of 10 characters, printable ASCII only, facing right. Write each row in backticks, so that `\` needs no escape.
+
+Everyone in the lobby sees your character as **your** code draws it: `NormalizeArt` cleans it, `ColorFor` colours it, and `Mirror` turns it when you walk left.
+
+## Debugging
+
+Set `ARENA_DEBUG=1` to show debug output from the `avatar` package:
+
+```sh
+ARENA_DEBUG=1 make run
+```

@@ -1,0 +1,81 @@
+package main
+
+import (
+	"context"
+	"flag"
+	"fmt"
+	"log"
+	"math/rand/v2"
+	"os"
+	"strings"
+
+	"github.com/hajimehoshi/ebiten/v2"
+
+	"arena/avatar"
+	"arena/internal/engine"
+	"arena/internal/netclient"
+	"arena/internal/protocol"
+	"arena/internal/solo"
+)
+
+func main() {
+	server := flag.String("server", "", "lobby address, e.g. https://abc.ngrok-free.app (empty: solo mode)")
+	flag.Parse()
+	online := strings.TrimSpace(*server) != ""
+
+	name := avatar.Name
+	if !online && strings.TrimSpace(name) == "" {
+		name = "No Name Yet"
+	}
+	if err := avatar.ValidateName(name); err != nil {
+		fail(err)
+	}
+
+	me := &avatar.Avatar{
+		Name: name,
+		Pos: avatar.Pos{
+			X: 120 + rand.Float64()*(protocol.RoomW-240),
+			Y: 160 + rand.Float64()*(protocol.RoomH-280),
+		},
+	}
+	art := avatar.NormalizeArt(avatar.Art)
+	c, _ := avatar.ColorFor(avatar.Color)
+	look := protocol.Look{Art: art, ArtLeft: avatar.Mirror(art), Color: protocol.Pack(c)}
+
+	var conn engine.Conn
+	var welcome protocol.ServerMsg
+	title := "Go Arena · " + name
+	if online {
+		nc, w, err := netclient.Dial(context.Background(), *server, protocol.ClientMsg{
+			Type:    protocol.TypeJoin,
+			Profile: &protocol.Profile{Name: name},
+			Look:    &look,
+			X:       me.Pos.X,
+			Y:       me.Pos.Y,
+		})
+		if err != nil {
+			fail(err)
+		}
+		defer nc.Close()
+		conn, welcome = nc, w
+	} else {
+		conn, welcome = solo.New()
+		title += " (solo)"
+	}
+
+	ebiten.SetWindowTitle(title)
+	ebiten.SetWindowSize(protocol.RoomW, protocol.RoomH)
+	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
+	g := engine.New(engine.Config{Conn: conn, Welcome: welcome, Me: me, Look: look})
+	if err := ebiten.RunGame(g); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func fail(err error) {
+	fmt.Fprintln(os.Stderr, "Could not join:", err)
+	if hint := avatar.JoinHint(err); hint != "" {
+		fmt.Fprintln(os.Stderr, "Hint:", hint)
+	}
+	os.Exit(1)
+}

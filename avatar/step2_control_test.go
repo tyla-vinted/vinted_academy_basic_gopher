@@ -1,0 +1,135 @@
+package avatar
+
+import (
+	"image/color"
+	"slices"
+	"testing"
+)
+
+func TestStep2_ColorFor(t *testing.T) {
+	tests := []struct {
+		name   string
+		want   color.RGBA
+		wantOK bool
+	}{
+		{"red", Red, true},
+		{"orange", Orange, true},
+		{"yellow", Yellow, true},
+		{"green", Green, true},
+		{"blue", Blue, true},
+		{"cyan", Cyan, true},
+		{"purple", Purple, true},
+		{"pink", Pink, true},
+		{"white", White, true},
+		{"grey", Grey, true},
+		{"Cyan", Cyan, true},
+		{"GREEN", Green, true},
+		{"magenta", color.RGBA{}, false},
+		{"", color.RGBA{}, false},
+	}
+	for _, tt := range tests {
+		got, ok := ColorFor(tt.name)
+		if got != tt.want || ok != tt.wantOK {
+			t.Errorf("ColorFor(%q) = %v, %v; want %v, %v", tt.name, got, ok, tt.want, tt.wantOK)
+		}
+	}
+}
+
+func TestStep2_NormalizeArt(t *testing.T) {
+	in := []string{
+		"ab",
+		"a\tb",
+		"é",
+		"",
+	}
+	want := []string{
+		"ab ",
+		"a?b",
+		"?  ",
+		"   ",
+	}
+	got := NormalizeArt(in)
+	if !slices.Equal(got, want) {
+		t.Errorf("NormalizeArt(%q)\n got %q\nwant %q", in, got, want)
+	}
+	if in[1] != "a\tb" {
+		t.Error("NormalizeArt changed its input; return new rows")
+	}
+}
+
+func TestStep2_MirrorRune(t *testing.T) {
+	pairs := []struct{ in, want rune }{
+		{'(', ')'}, {')', '('},
+		{'[', ']'}, {']', '['},
+		{'{', '}'}, {'}', '{'},
+		{'<', '>'}, {'>', '<'},
+		{'/', '\\'}, {'\\', '/'},
+		{'b', 'd'}, {'d', 'b'},
+		{'p', 'q'}, {'q', 'p'},
+		{'o', 'o'}, {'|', '|'}, {' ', ' '},
+	}
+	for _, p := range pairs {
+		if got := MirrorRune(p.in); got != p.want {
+			t.Errorf("MirrorRune(%q) = %q, want %q", p.in, got, p.want)
+		}
+	}
+}
+
+func TestStep2_Mirror(t *testing.T) {
+	in := []string{
+		`(o>`,
+		`/| `,
+	}
+	want := []string{
+		`<o)`,
+		` |\`,
+	}
+	if got := Mirror(in); !slices.Equal(got, want) {
+		t.Errorf("Mirror(%q) = %q, want %q", in, got, want)
+	}
+	if in[0] != `(o>` {
+		t.Error("Mirror changed its input; return new rows")
+	}
+}
+
+func TestStep2_ArtOfMe(t *testing.T) {
+	if len(Art) == 0 || len(Art) > MaxArtRows {
+		t.Errorf("Art has %d rows; want 1-%d", len(Art), MaxArtRows)
+	}
+	for i, row := range Art {
+		if n := len([]rune(row)); n > MaxArtCols {
+			t.Errorf("Art[%d] has %d characters; want at most %d", i, n, MaxArtCols)
+		}
+		for _, r := range row {
+			if r < ' ' || r > '~' {
+				t.Errorf("Art[%d] has %q; use only printable ASCII", i, r)
+			}
+		}
+	}
+	if _, ok := ColorFor(Color); !ok {
+		t.Errorf("Color = %q is not a known colour", Color)
+	}
+}
+
+func TestStep2_ParseCommand(t *testing.T) {
+	tests := []struct {
+		in      string
+		want    Command
+		wantArg string
+	}{
+		{"hello all", CommandSay, "hello all"},
+		{"  hi  ", CommandSay, "hi"},
+		{"/wave", CommandEmote, "wave"},
+		{"/confetti", CommandEmote, "confetti"},
+		{"/status lunch break", CommandStatus, "lunch break"},
+		{"/status", CommandStatus, ""},
+		{"/highfive", CommandHighFive, ""},
+		{"/fly", CommandUnknown, "fly"},
+	}
+	for _, tt := range tests {
+		got, arg := ParseCommand(tt.in)
+		if got != tt.want || arg != tt.wantArg {
+			t.Errorf("ParseCommand(%q) = %v, %q; want %v, %q", tt.in, got, arg, tt.want, tt.wantArg)
+		}
+	}
+}
