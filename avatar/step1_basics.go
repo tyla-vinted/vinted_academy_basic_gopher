@@ -5,12 +5,16 @@ package avatar
 
 const Speed = 3.0 // pixels per frame
 
-// Move returns your position after one frame. dx and dy are the direction
-// of the keys you hold, from -1 to 1: left and up are negative, right and
-// down are positive, 0 means no key. Move Speed pixels in that direction.
+// Move returns your position after one key press. The arena calls it once
+// per frame for each key that you hold, with the key name:
 //
-//	Move(100, 100, 1, 0)  → 103, 100   (right)
-//	Move(100, 100, 0, -1) → 100, 97    (up)
-func Move(x, y, dx, dy float64) (newX, newY float64) {
+//	"w" or "up"      → Speed pixels up    (y gets smaller)
+//	"s" or "down"    → Speed pixels down  (y gets bigger)
+//	"a" or "left"    → Speed pixels left  (x gets smaller)
+//	"d" or "right"   → Speed pixels right (x gets bigger)
+//	any other key    → no change
+//
+// Hint: a switch case can list several values: case "w", "up":
+func Move(x, y float64, key string) (newX, newY float64) {
 	return x, y // TODO: you stand still until you write this
 }

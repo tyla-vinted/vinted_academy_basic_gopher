@@ -335,26 +335,15 @@ func (g *Game) updateKeys(now time.Time) {
 		}
 	}
 
-	var dx, dy float64
-	if ebiten.IsKeyPressed(ebiten.KeyA) || ebiten.IsKeyPressed(ebiten.KeyArrowLeft) {
-		dx--
+	x, y := g.me.Pos.X, g.me.Pos.Y
+	for _, k := range moveKeys {
+		if ebiten.IsKeyPressed(k.key) {
+			x, y = avatar.Move(x, y, k.name)
+		}
 	}
-	if ebiten.IsKeyPressed(ebiten.KeyD) || ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
-		dx++
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyW) || ebiten.IsKeyPressed(ebiten.KeyArrowUp) {
-		dy--
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyS) || ebiten.IsKeyPressed(ebiten.KeyArrowDown) {
-		dy++
-	}
-	if dx == 0 && dy == 0 {
+	if x == g.me.Pos.X && y == g.me.Pos.Y {
 		return
 	}
-	if dx != 0 && dy != 0 {
-		dx, dy = dx*math.Sqrt2/2, dy*math.Sqrt2/2
-	}
-	x, y := avatar.Move(g.me.Pos.X, g.me.Pos.Y, dx, dy)
 	if x != g.me.Pos.X {
 		g.meLeft = x < g.me.Pos.X
 	}
@@ -363,6 +352,16 @@ func (g *Game) updateKeys(now time.Time) {
 	next.X = math.Max(w/2, math.Min(protocol.RoomW-w/2, next.X))
 	next.Y = math.Max(h/2+40, math.Min(protocol.RoomH-h/2-30, next.Y))
 	g.me.Pos = next
+}
+
+// moveKeys are the keys that the arena passes to avatar.Move, by name.
+var moveKeys = []struct {
+	key  ebiten.Key
+	name string
+}{
+	{ebiten.KeyW, "w"}, {ebiten.KeyA, "a"}, {ebiten.KeyS, "s"}, {ebiten.KeyD, "d"},
+	{ebiten.KeyArrowUp, "up"}, {ebiten.KeyArrowDown, "down"},
+	{ebiten.KeyArrowLeft, "left"}, {ebiten.KeyArrowRight, "right"},
 }
 
 func (g *Game) updateTyping(now time.Time) {

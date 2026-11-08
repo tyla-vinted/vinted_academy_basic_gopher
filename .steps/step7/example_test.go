@@ -10,7 +10,7 @@ import (
 
 // go test runs an Example and compares what it prints with the Output comment.
 func ExampleMove() {
-	x, y := avatar.Move(100, 100, 1, 0)
+	x, y := avatar.Move(100, 100, "d")
 	fmt.Println(x, y)
 	// Output: 103 100
 }
