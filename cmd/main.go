@@ -31,13 +31,13 @@ func main() {
 		}
 	}
 
-	me := &avatar.Avatar{
-		Name: name,
-		Pos: avatar.Pos{
-			X: 120 + rand.Float64()*(protocol.RoomW-240),
-			Y: 160 + rand.Float64()*(protocol.RoomH-280),
-		},
+	x := 120 + rand.Float64()*(protocol.RoomW-240)
+	y := 160 + rand.Float64()*(protocol.RoomH-280)
+	a := avatar.NewAvatar(name, x, y)
+	if a == (avatar.Avatar{}) {
+		a = avatar.Avatar{Name: name, Pos: avatar.Pos{X: x, Y: y}} // NewAvatar is not written yet
 	}
+	me := &a
 	art := engine.NormalizeArt(rawArt)
 	c := engine.ColorFor(colorName)
 	look := protocol.Look{Art: art, ArtLeft: avatar.Mirror(art), Color: protocol.Pack(c)}

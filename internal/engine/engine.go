@@ -615,8 +615,12 @@ func (g *Game) drawPerson(screen *ebiten.Image, p *person, now time.Time) {
 	}
 
 	nameCol := colText
-	if me {
+	switch {
+	case me:
 		nameCol = colAccent
+	case g.me.CanHighFive(g.asAvatar(p)):
+		nameCol = colGood
+		vector.DrawFilledRect(screen, float32(x-w/2), float32(y+h/2+6), float32(w), 2, colGood, false)
 	}
 	g.textAt(screen, p.info.Profile.Name, g.bold, x, y+h/2+10, nameCol, true)
 	if p.info.Status != "" {

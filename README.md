@@ -46,7 +46,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 | 2 | `step2_movement.go` | Flow control (`switch`), enums (`iota`) | You walk (WASD or arrow keys) |
 | 3 | `step3_looks.go` | `for` loops | Your art faces the way you walk |
 | 4 | `step4_chat.go` | `if`, strings, maps | Chat, and emote commands like `/dance` |
-| 5 | `step5_structs.go` | Structs and methods | High-fives |
+| 5 | `step5_structs.go` | Structs and methods | Someone turns green when you are close enough to high-five |
 | 6 | `step6_pointers.go` | Pointers vs values | `/status` shows under your name; emote cooldown |
 | 7 | `step7_generics.go` | Generics | Chat history; the "Nearby" list |
 | 8 | `step8_errors.go` | Errors: `error` values, `fmt.Errorf`, `errors.Is`/`errors.As` | Clear error messages in the game and in the terminal |

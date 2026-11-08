@@ -2,13 +2,11 @@ package avatar
 
 import "testing"
 
-func TestStep5_PosAdd(t *testing.T) {
-	p := Pos{10, 20}
-	if got, want := p.Add(5, -5), (Pos{15, 15}); got != want {
-		t.Errorf("Pos{10, 20}.Add(5, -5) = %v, want %v", got, want)
-	}
-	if p != (Pos{10, 20}) {
-		t.Errorf("Add changed p to %v; it must return a new Pos", p)
+func TestStep5_NewAvatar(t *testing.T) {
+	got := NewAvatar("Ada", 10, 20)
+	want := Avatar{Name: "Ada", Pos: Pos{X: 10, Y: 20}}
+	if got != want {
+		t.Errorf("NewAvatar(\"Ada\", 10, 20) = %+v, want %+v", got, want)
 	}
 }
 

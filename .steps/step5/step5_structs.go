@@ -1,6 +1,6 @@
 package avatar
 
-// Step 5: structs and methods.
+// Step 5: structs and methods: high-fives.
 // Check: make check
 
 type Pos struct {
@@ -13,9 +13,9 @@ type Avatar struct {
 	Status string
 }
 
-// Add returns p moved by dx and dy.
-func (p Pos) Add(dx, dy float64) Pos {
-	return Pos{p.X + dx, p.Y + dy}
+// NewAvatar returns an avatar with the given name, standing at x, y.
+func NewAvatar(name string, x, y float64) Avatar {
+	return Avatar{} // TODO
 }
 
 // DistanceTo returns the straight-line distance from p to q.

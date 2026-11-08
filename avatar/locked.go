@@ -67,8 +67,8 @@ type Avatar struct {
 	Status string
 }
 
-func (p Pos) Add(dx, dy float64) Pos {
-	return Pos{p.X + dx, p.Y + dy}
+func NewAvatar(name string, x, y float64) Avatar {
+	return Avatar{}
 }
 
 func (p Pos) DistanceTo(q Pos) float64 {
