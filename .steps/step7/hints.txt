@@ -1,0 +1,12 @@
+## Reverse
+It is the same loop as your ReverseString, but for []T instead of []rune.
+reversed := make([]T, len(items)), then in a loop: reversed[len(items)-1-i] = item
+
+## Filter
+Start with var out []T and loop over items.
+keep is a function: call it as keep(item). When it returns true, append the item to out.
+
+## Last
+The last n items start at index len(items)-n.
+When there are fewer than n items, start at 0: start := max(len(items)-n, 0)
+for i := start; i < len(items); i++ { out = append(out, items[i]) }

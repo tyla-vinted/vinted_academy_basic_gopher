@@ -1,0 +1,8 @@
+## SetStatus
+The method sets a.Status, but the change does not stay. Which Avatar does it change?
+A method with a value receiver, (a Avatar), works on a copy of the avatar.
+Make it a pointer receiver: func (a *Avatar) SetStatus
+
+## Cooldown
+Try sets c.last, but on the next call c.last is empty again. It is the same bug as in SetStatus.
+Make it a pointer receiver: func (c *Cooldown) Try

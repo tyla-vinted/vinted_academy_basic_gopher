@@ -1,0 +1,16 @@
+## Name
+Name returns a string. Replace "" with your name, in quotes.
+Use 1 to 16 characters, for example: return "Ada"
+
+## Color
+Color returns one of the colour names from its comment, as a string.
+For example: return "cyan"
+
+## Art
+Art already returns a gopher. If you changed it: at most 5 rows, and each row at most 10 characters.
+Use only characters from a US keyboard: no letters like é, no emoji.
+
+## Me
+Me returns three values. You already have three functions that give them.
+A function can return several values at once: return a, b, c
+return Name(), Color(), Art()

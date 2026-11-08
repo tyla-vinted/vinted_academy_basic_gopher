@@ -1,0 +1,11 @@
+## checkDistance
+Use your CanHighFive from step 5. When it says no, return ErrTooFar.
+When the distance is fine, return nil.
+
+## checkCooldown
+Use cd.Try(now). When it returns false, return ErrOnCooldown. Otherwise return nil.
+
+## HighFive
+Call checkDistance first. If it returns an error, stop and return that error, wrapped.
+err := checkDistance(me, other), then: if err != nil { return ... }
+Wrap it with fmt.Errorf("high-five with %s: %w", other.Name, err). Do the same for checkCooldown, and return nil at the end.

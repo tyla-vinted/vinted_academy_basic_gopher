@@ -1,0 +1,14 @@
+## MirrorRune
+Use a switch on r, like DirectionFor in step 2, but with runes: case '(':
+Every pair works both ways: '(' becomes ')' and ')' becomes '('.
+A backslash rune needs an escape: '\\'. Any other rune comes back as it is: default: return r
+
+## ReverseString
+Turn the string into a slice of runes first: runes := []rune(s)
+Make a new slice of the same length: reversed := make([]rune, len(runes))
+In a for loop over runes, put each rune at the other end: reversed[len(runes)-1-i] = r. Then return string(reversed).
+
+## Mirror
+A mirror does two things to each row: it reverses the row, and it mirrors each rune.
+Start with var result []string. For each row: reverse it with ReverseString, then mirror each rune with MirrorRune.
+runes := []rune(ReverseString(row)), a loop that sets runes[i] = MirrorRune(r), then result = append(result, string(runes)).

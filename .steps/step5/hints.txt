@@ -1,0 +1,13 @@
+## NewAvatar
+Return an Avatar built with a struct literal: Avatar{...}
+Name the fields: Avatar{Name: name, Pos: ...}
+Pos is a struct too: Pos: Pos{X: x, Y: y}
+
+## DistanceTo
+The distance is the length of the line from p to q: the square root of dx*dx + dy*dy.
+math.Hypot(dx, dy) computes it for you. Add import "math".
+return math.Hypot(q.X-p.X, q.Y-p.Y)
+
+## CanHighFive
+Use your DistanceTo on the two positions: a.Pos and other.Pos.
+Compare the distance with 100.0. "At most" means <=.

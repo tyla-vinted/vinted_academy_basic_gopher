@@ -3,6 +3,7 @@
 //	go run ./internal/steps check        test the steps you have
 //	go run ./internal/steps next         if they pass, unlock the next step
 //	go run ./internal/steps next -force  unlock the next step without the tests
+//	go run ./internal/steps hint         a hint for the first failing test
 //	go run ./internal/steps final        pass only when all steps are done
 //	go run ./internal/steps goto <n>     unlock up to step n, no tests (for the host)
 //	go run ./internal/steps gen          rewrite avatar/locked.go
@@ -56,6 +57,8 @@ func main() {
 		err = check()
 	case "next":
 		err = next(len(os.Args) > 2 && os.Args[2] == "-force")
+	case "hint":
+		err = hint()
 	case "final":
 		err = final()
 	case "goto":
@@ -79,7 +82,7 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: steps check | next [-force] | final | goto <1-9> | gen")
+	fmt.Fprintln(os.Stderr, "usage: steps check | next [-force] | hint | final | goto <1-9> | gen")
 	os.Exit(2)
 }
 
@@ -169,6 +172,9 @@ func unlock(k int) ([]string, error) {
 	}
 	var out []string
 	for _, e := range entries {
+		if !strings.HasSuffix(e.Name(), ".go") {
+			continue // hints.txt stays in .steps
+		}
 		data, err := os.ReadFile(filepath.Join(src, e.Name()))
 		if err != nil {
 			return nil, err
@@ -253,4 +259,92 @@ func gen(n int) error {
 		return fmt.Errorf("format %s: %w", lockedGo, err)
 	}
 	return os.WriteFile(lockedGo, out, 0o644)
+}
+
+const hintsState = ".hints"
+
+var failLine = regexp.MustCompile(`--- FAIL: TestStep(\d)_([A-Za-z0-9]+)`)
+
+// hint runs the tests and prints the next hint for the first failing test.
+// Each call for the same test shows the next hint; .hints remembers where
+// each learner is.
+func hint() error {
+	out, _ := exec.Command("go", "test", "./"+avatarDir).CombinedOutput()
+	if strings.Contains(string(out), "[build failed]") || strings.Contains(string(out), "[setup failed]") {
+		return fmt.Errorf("Your code does not compile yet. Run make check to see the error, then fix that first")
+	}
+	m := failLine.FindStringSubmatch(string(out))
+	if m == nil {
+		n := current()
+		if n == lastStep {
+			fmt.Println("All tests pass. Join the lobby: make join SERVER=<url>")
+		} else {
+			fmt.Printf("All tests pass. Unlock step %d: make next\n", n+1)
+		}
+		return nil
+	}
+	step, name := m[1], m[2]
+	hints := readHints(filepath.Join(stepsDir, "step"+step, "hints.txt"), name)
+	if len(hints) == 0 {
+		fmt.Printf("TestStep%s_%s fails, and there is no hint for it. Read the test, or ask the host.\n", step, name)
+		return nil
+	}
+
+	key := "step" + step + "/" + name
+	seen := readState()
+	i := min(seen[key], len(hints)-1)
+	fmt.Printf("Hint %d of %d for %s (step %s):\n\n  %s\n\n", i+1, len(hints), name, step, hints[i])
+	if i+1 < len(hints) {
+		fmt.Println("Still stuck? Run make hint again for the next hint.")
+	} else {
+		fmt.Println("That was the last hint. If you are still stuck, ask the host.")
+	}
+	seen[key] = i + 1
+	return writeState(seen)
+}
+
+// readHints returns the hints under "## <name>" in a hints.txt file.
+func readHints(path, name string) []string {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil
+	}
+	var hints []string
+	in := false
+	for _, line := range strings.Split(string(data), "\n") {
+		line = strings.TrimSpace(line)
+		if strings.HasPrefix(line, "## ") {
+			in = strings.TrimSpace(strings.TrimPrefix(line, "## ")) == name
+			continue
+		}
+		if in && line != "" {
+			hints = append(hints, line)
+		}
+	}
+	return hints
+}
+
+func readState() map[string]int {
+	seen := map[string]int{}
+	data, _ := os.ReadFile(hintsState)
+	for _, line := range strings.Split(string(data), "\n") {
+		key, n, ok := strings.Cut(line, " ")
+		if v, err := strconv.Atoi(n); ok && err == nil {
+			seen[key] = v
+		}
+	}
+	return seen
+}
+
+func writeState(seen map[string]int) error {
+	keys := make([]string, 0, len(seen))
+	for k := range seen {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	var b strings.Builder
+	for _, k := range keys {
+		fmt.Fprintf(&b, "%s %d\n", k, seen[k])
+	}
+	return os.WriteFile(hintsState, []byte(b.String()), 0o644)
 }

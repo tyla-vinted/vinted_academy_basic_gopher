@@ -59,6 +59,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 | `make run` | Opens the arena in solo mode: no server. Chat, emotes and status work. In step 5, your `NewAvatar` puts a dummy in the room for you to high-five, named after you (for example "Ada Jr"). |
 | `make check` | Tests the steps that you have, and tells you what to do next. |
 | `make next` | If your steps pass, unlocks the next step. |
+| `make hint` | Gives a hint for the first failing test. Run it again for the next hint. |
 | `make test` | Runs the tests, with less text than `make check`. |
 | `make online SERVER=<url>` | Joins the workshop lobby without the tests. Use it to try high-fives with your neighbours. |
 | `make join SERVER=<url>` | When all 9 steps pass, joins the workshop lobby for the finale. |

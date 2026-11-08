@@ -1,0 +1,4 @@
+## DirectionFor
+Use a switch on key. Each case returns one of the Direction constants.
+One case can list two keys: case "w", "up":
+Keys that are not in the list return Stay: put that in the default case.

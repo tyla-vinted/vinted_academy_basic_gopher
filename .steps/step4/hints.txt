@@ -1,0 +1,9 @@
+## Message
+strings.TrimSpace removes the spaces around a string.
+After trimming, if the text is "", return "", false.
+Otherwise return the trimmed text and true.
+
+## EmoteFor
+First fill in the emotes map: "/confetti" and "/heart" are missing.
+A map lookup can give two values: value, ok := emotes[key]
+Trim the input with strings.TrimSpace before the lookup, then return both values.

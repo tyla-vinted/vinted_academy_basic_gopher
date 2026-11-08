@@ -1,6 +1,6 @@
 SERVER ?=
 
-.PHONY: run check next test online join doctor
+.PHONY: run check next hint test online join doctor
 
 ## run: open the arena in solo mode (no server)
 run:
@@ -13,6 +13,10 @@ check:
 ## next: if your steps pass, unlock the next step
 next:
 	@go run ./internal/steps next
+
+## hint: a hint for the first failing test; run it again for the next hint
+hint:
+	@go run ./internal/steps hint
 
 ## test: run all tests, with less text than make check
 test:

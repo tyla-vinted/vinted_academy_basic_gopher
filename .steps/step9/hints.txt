@@ -1,0 +1,5 @@
+## Greet
+Write a table: a slice of structs, each with a name, the other Avatar, and the greeting you want. TestStep8_HighFive shows the pattern.
+Cover each rule in the Greet comment first: the same name, a status, neither.
+Now the edge cases: the same name in other letters ("ADA" and "Ada"), and a name that contains yours ("Adam" and "Ada"). What should Greet say?
+The bug is strings.Contains. Two names are the same when strings.EqualFold says so.
