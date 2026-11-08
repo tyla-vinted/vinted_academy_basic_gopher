@@ -8,7 +8,7 @@ import (
 // Step 6: pointers: your status and emote cooldown.
 // Check: make check
 
-// SetStatus sets the status shown under your name, as in "/status lunch":
+// SetStatus sets the status shown under your name, as in "/status lunch".
 //
 // TODO: "/status lunch" does nothing. Find out why.
 func (a Avatar) SetStatus(s string) {
