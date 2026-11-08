@@ -14,14 +14,12 @@ func Reverse[T any](items []T) []T {
 
 // Filter returns the items for which keep returns true, in order.
 // For example, Filter(nums, func(n int) bool { return n > 0 }) keeps the
-// positive numbers. The arena lists who you can high-five with
-// Filter(others, me.CanHighFive).
+// positive numbers.
 func Filter[T any](items []T, keep func(T) bool) []T {
 	return nil // TODO
 }
 
 // Last returns the last n items, or all of them when there are fewer.
-// The arena shows Last(chat, 8) as the chat history.
 func Last[T any](items []T, n int) []T {
 	return nil // TODO
 }
