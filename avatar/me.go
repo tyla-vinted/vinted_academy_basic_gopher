@@ -15,9 +15,9 @@ const (
 // characters. Use only the characters on a US keyboard. The arena mirrors it
 // when you walk left. In backticks, \ needs no escape.
 var Art = []string{
-	`  ,---.  `,
-	` ( o o)> `,
-	`  \ - /  `,
-	`  /|_|\  `,
-	`   / \   `,
+	`  n____n  `,
+	` ( O  O ) `,
+	` (  ''  )/`,
+	` (______) `,
+	`   d  b   `,
 }
