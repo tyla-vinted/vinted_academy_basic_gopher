@@ -27,7 +27,7 @@ online:
 	@test -n "$(SERVER)" || (echo "usage: make online SERVER=https://<host>"; exit 1)
 	go run ./cmd -server $(SERVER)
 
-## join: when all 7 steps pass, join the workshop lobby for the finale
+## join: when all 9 steps pass, join the workshop lobby for the finale
 join:
 	@test -n "$(SERVER)" || (echo "usage: make join SERVER=https://<host>"; exit 1)
 	@go run ./internal/steps final
