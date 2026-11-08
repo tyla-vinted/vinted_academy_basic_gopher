@@ -459,9 +459,13 @@ func (g *Game) highFive(now time.Time) {
 		g.toast("Nobody nearby. Walk up to someone first.", colError, now)
 		return
 	}
-	if err := avatar.CheckHighFive(*g.me, g.asAvatar(best)); err != nil {
+	other := g.asAvatar(best)
+	if err := avatar.CheckHighFive(*g.me, other); err != nil {
 		g.toast(err.Error(), colError, now)
 		return
+	}
+	if !g.me.CanHighFive(other) {
+		return // until step 5, CanHighFive says no to everyone
 	}
 	g.conn.Send(protocol.ClientMsg{Type: protocol.TypeHighFive, To: best.info.ID})
 }
