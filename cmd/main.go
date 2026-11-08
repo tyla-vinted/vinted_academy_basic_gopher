@@ -23,12 +23,11 @@ func main() {
 	flag.Parse()
 	online := strings.TrimSpace(*server) != ""
 
-	name := avatar.Name
-	if !online && strings.TrimSpace(name) == "" {
-		name = "No Name Yet"
-	}
-	if err := avatar.ValidateName(name); err != nil {
-		fail(err)
+	name := strings.TrimSpace(avatar.Name)
+	if online {
+		if err := avatar.ValidateName(name); err != nil {
+			fail(err)
+		}
 	}
 
 	me := &avatar.Avatar{
@@ -44,7 +43,10 @@ func main() {
 
 	var conn engine.Conn
 	var welcome protocol.ServerMsg
-	title := "Go Arena · " + name
+	title := "Go Arena"
+	if name != "" {
+		title += " · " + name
+	}
 	if online {
 		nc, w, err := netclient.Dial(context.Background(), *server, protocol.ClientMsg{
 			Type:    protocol.TypeJoin,

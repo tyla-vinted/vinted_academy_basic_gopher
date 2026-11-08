@@ -690,6 +690,10 @@ func (g *Game) drawChat(screen *ebiten.Image) {
 			g.textAt(screen, s, g.small, 16, y+1, colDim, false)
 			continue
 		}
+		if l.from == "" {
+			g.textAt(screen, s, g.font, 16, y, colText, false)
+			continue
+		}
 		g.textAt(screen, l.from+":", g.bold, 16, y, colAccent, false)
 		nw, _ := text.Measure(l.from+": ", g.bold, 0)
 		g.textAt(screen, s, g.font, 16+nw, y, colText, false)
