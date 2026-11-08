@@ -12,19 +12,19 @@ func TestStep1_Name(t *testing.T) {
 	if strings.TrimSpace(name) == "" {
 		t.Error("Name returns an empty name")
 	}
-	if n := utf8.RuneCountInString(name); n > MaxNameLen {
-		t.Errorf("Name returns %q: %d characters; want at most %d", name, n, MaxNameLen)
+	if n := utf8.RuneCountInString(name); n > 16 {
+		t.Errorf("Name returns %q: %d characters; want at most 16", name, n)
 	}
 }
 
 func TestStep1_Art(t *testing.T) {
 	art := Art()
-	if len(art) == 0 || len(art) > MaxArtRows {
-		t.Errorf("Art returns %d rows; want 1-%d", len(art), MaxArtRows)
+	if len(art) == 0 || len(art) > 5 {
+		t.Errorf("Art returns %d rows; want 1-5", len(art))
 	}
 	for i, row := range art {
-		if n := utf8.RuneCountInString(row); n > MaxArtCols {
-			t.Errorf("Art()[%d] has %d characters; want at most %d", i, n, MaxArtCols)
+		if n := utf8.RuneCountInString(row); n > 10 {
+			t.Errorf("Art()[%d] has %d characters; want at most 10", i, n)
 		}
 		for _, r := range row {
 			if r < ' ' || r > '~' {
