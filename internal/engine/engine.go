@@ -39,6 +39,7 @@ const (
 	maxInput     = 120
 	maxBubbleLen = 40
 	speed        = 3.0 // pixels per frame
+	maxGuess     = 9   // frames (150 ms) of dead reckoning between updates
 	chatLines    = 8
 )
 
@@ -77,6 +78,10 @@ type person struct {
 	pos         avatar.Pos
 	target      avatar.Pos
 	left        bool
+	seen        avatar.Pos // the last position from the server
+	seenAt      time.Time
+	vel         avatar.Pos // pixels per frame, from the last two updates
+	guessed     int        // frames that target has moved on by vel since seen
 	bubble      string
 	bubbleUntil time.Time
 	emote       string
@@ -171,7 +176,7 @@ func (g *Game) add(info protocol.PlayerInfo) {
 	if info.ID == g.you {
 		pos = g.me.Pos
 	}
-	g.people[info.ID] = &person{info: info, pos: pos, target: pos, left: info.Left}
+	g.people[info.ID] = &person{info: info, pos: pos, target: pos, seen: pos, left: info.Left}
 }
 
 var unknownArt = []string{"[?]", `/|\`, `/ \`}
@@ -223,8 +228,15 @@ func (g *Game) Update() error {
 			p.pos, p.left = g.me.Pos, g.meLeft
 			continue
 		}
-		// Walk towards the last known position at a steady speed, a bit
-		// faster than walking so that others catch up; snap on big jumps.
+		// Dead reckoning: between updates, keep the target moving at the
+		// last known speed, for at most maxGuess frames.
+		if p.guessed < maxGuess && (p.vel.X != 0 || p.vel.Y != 0) {
+			p.target.X += p.vel.X
+			p.target.Y += p.vel.Y
+			p.guessed++
+		}
+		// Walk towards the target at a steady speed, a bit faster than
+		// walking so that others catch up; snap on big jumps.
 		dx, dy := p.target.X-p.pos.X, p.target.Y-p.pos.Y
 		switch d := math.Hypot(dx, dy); {
 		case d > 150 || d <= speed*1.5:
@@ -265,7 +277,7 @@ func (g *Game) handle(m protocol.ServerMsg, now time.Time) {
 	case protocol.TypeState:
 		for _, ps := range m.Positions {
 			if p, ok := g.people[ps.ID]; ok && ps.ID != g.you {
-				p.target = avatar.Pos{X: ps.X, Y: ps.Y}
+				g.seenAt(p, avatar.Pos{X: ps.X, Y: ps.Y}, now)
 				p.left = ps.Left
 			}
 		}
@@ -469,6 +481,19 @@ func (g *Game) highFive(now time.Time) {
 		return // until step 5, CanHighFive says no to everyone
 	}
 	g.conn.Send(protocol.ClientMsg{Type: protocol.TypeHighFive, To: best.info.ID})
+}
+
+// seenAt records a position from the server, and the speed since the last one.
+func (g *Game) seenAt(p *person, at avatar.Pos, now time.Time) {
+	p.vel = avatar.Pos{}
+	if dt := now.Sub(p.seenAt).Seconds(); dt > 0 && dt < 0.5 && at != p.seen {
+		frames := dt * 60
+		vx, vy := (at.X-p.seen.X)/frames, (at.Y-p.seen.Y)/frames
+		if math.Hypot(vx, vy) <= 2*speed {
+			p.vel = avatar.Pos{X: vx, Y: vy}
+		}
+	}
+	p.seen, p.seenAt, p.target, p.guessed = at, now, at, 0
 }
 
 func (g *Game) asAvatar(p *person) avatar.Avatar {
