@@ -682,6 +682,10 @@ func (g *Game) drawHUD(screen *ebiten.Image, now time.Time) {
 		g.textAt(screen, "In reach: "+strings.Join(names, ", "), g.small, 10, 8, colDim, false)
 	}
 
+	legend := "WASD / arrows move · Enter chat · 1–3 emotes · H high-five · /status <text>"
+	lw, _ := text.Measure(legend, g.small, 0)
+	g.textAt(screen, legend, g.small, protocol.RoomW-lw-10, 8, colDim, false)
+
 	if now.Before(g.bannerUntil) && g.banner != "" {
 		w, h := text.Measure(g.banner, g.bold, 0)
 		bx := float32(protocol.RoomW/2 - w/2 - 14)
