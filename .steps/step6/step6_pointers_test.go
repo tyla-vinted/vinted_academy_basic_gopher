@@ -13,7 +13,7 @@ func TestStep6_SetStatus(t *testing.T) {
 		t.Fatalf(`after SetStatus("  lunch  "), Status = %q; want "lunch"`, me.Status)
 	}
 	me.SetStatus(strings.Repeat("z", 30))
-	if want := strings.Repeat("z", MaxStatusLen); me.Status != want {
+	if want := strings.Repeat("z", 20); me.Status != want {
 		t.Errorf("after SetStatus of 30 characters, Status = %q; want %q", me.Status, want)
 	}
 	me.SetStatus("")

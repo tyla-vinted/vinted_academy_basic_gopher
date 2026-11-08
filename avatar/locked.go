@@ -80,9 +80,10 @@ func (a Avatar) CanHighFive(other Avatar) bool {
 }
 
 func (a Avatar) SetStatus(s string) {
+	maxLen := 20
 	s = strings.TrimSpace(s)
-	if r := []rune(s); len(r) > MaxStatusLen {
-		s = string(r[:MaxStatusLen])
+	if r := []rune(s); len(r) > maxLen {
+		s = string(r[:maxLen])
 	}
 	a.Status = s
 }

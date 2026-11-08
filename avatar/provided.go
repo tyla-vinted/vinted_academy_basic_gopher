@@ -7,7 +7,6 @@ import "errors"
 const (
 	MaxNameLen    = 16
 	MaxMessageLen = 80
-	MaxStatusLen  = 20
 
 	// Your Art must fit in this box.
 	MaxArtRows = 5

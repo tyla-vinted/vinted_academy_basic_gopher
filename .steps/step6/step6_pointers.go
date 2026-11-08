@@ -9,14 +9,15 @@ import (
 // Check: make check
 
 // SetStatus sets the status shown under your name, as in "/status lunch":
-// s without the spaces around it, cut to MaxStatusLen characters.
+// s without the spaces around it, cut to 20 characters.
 // An empty s clears the status.
 //
 // TODO: "/status lunch" does nothing. Find out why.
 func (a Avatar) SetStatus(s string) {
+	maxLen := 20
 	s = strings.TrimSpace(s)
-	if r := []rune(s); len(r) > MaxStatusLen {
-		s = string(r[:MaxStatusLen])
+	if r := []rune(s); len(r) > maxLen {
+		s = string(r[:maxLen])
 	}
 	a.Status = s
 }
