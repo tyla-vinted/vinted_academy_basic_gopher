@@ -35,7 +35,7 @@ const (
 	emoteTime    = 2500 * time.Millisecond
 	toastTime    = 3500 * time.Millisecond
 	bannerTime   = 10 * time.Second
-	moveInterval = 66 * time.Millisecond
+	moveInterval = 50 * time.Millisecond
 	maxInput     = 120
 	maxBubbleLen = 40
 	speed        = 3.0 // pixels per frame
@@ -223,8 +223,16 @@ func (g *Game) Update() error {
 			p.pos, p.left = g.me.Pos, g.meLeft
 			continue
 		}
-		p.pos.X += (p.target.X - p.pos.X) * 0.25
-		p.pos.Y += (p.target.Y - p.pos.Y) * 0.25
+		// Walk towards the last known position at a steady speed, a bit
+		// faster than walking so that others catch up; snap on big jumps.
+		dx, dy := p.target.X-p.pos.X, p.target.Y-p.pos.Y
+		switch d := math.Hypot(dx, dy); {
+		case d > 150 || d <= speed*1.5:
+			p.pos = p.target
+		default:
+			p.pos.X += dx / d * speed * 1.5
+			p.pos.Y += dy / d * speed * 1.5
+		}
 	}
 	g.updateParticles()
 	if !g.lost && (g.me.Pos != g.lastSent || g.meLeft != g.lastLeft) && now.Sub(g.lastSentAt) >= moveInterval {
