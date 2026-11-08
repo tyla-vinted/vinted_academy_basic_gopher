@@ -1,6 +1,6 @@
 // Package solo stands in for the lobby when no server is given: it sends
-// your own chat, emotes and status back to you, so you can see them. From
-// step 5 on, a dummy stands in the room, so you can try high-fives.
+// your own chat, emotes and status back to you, so you can see them. A
+// dummy can stand in the room, so you can try high-fives.
 package solo
 
 import (
@@ -14,31 +14,42 @@ const (
 	dummy = "dummy"
 )
 
+// Where the arena asks NewAvatar to put the dummy.
+const (
+	DummyX = protocol.RoomW * 0.7
+	DummyY = protocol.RoomH / 2
+)
+
 var (
-	dummyPos = [2]float64{protocol.RoomW * 0.7, protocol.RoomH / 2}
 	dummyArt = []string{` [o_o] `, `  /|\  `, `   |   `, `  / \  `}
 	replies  = []string{"Up top!", "Nice one!", "Again!"}
 )
 
+// Dummy is an avatar that stands still in the solo room.
+type Dummy struct {
+	Name string
+	X, Y float64
+}
+
 type Conn struct {
 	events  chan protocol.ServerMsg
 	x, y    float64
-	dummy   bool
+	dummy   *Dummy
 	replied int
 }
 
 // New returns a solo connection and the welcome message for it. x and y are
-// where you start. With dummy, a dummy avatar stands in the room.
-func New(withDummy bool, x, y float64) (*Conn, protocol.ServerMsg) {
-	c := &Conn{events: make(chan protocol.ServerMsg, 64), x: x, y: y, dummy: withDummy}
+// where you start. When d is not nil, the dummy stands in the room.
+func New(x, y float64, d *Dummy) (*Conn, protocol.ServerMsg) {
+	c := &Conn{events: make(chan protocol.ServerMsg, 64), x: x, y: y, dummy: d}
 	w := protocol.ServerMsg{Type: protocol.TypeWelcome, You: you}
-	if withDummy {
+	if d != nil {
 		w.Players = []protocol.PlayerInfo{{
 			ID:      dummy,
-			Profile: protocol.Profile{Name: "Dummy"},
+			Profile: protocol.Profile{Name: d.Name},
 			Look:    protocol.Look{Art: dummyArt, ArtLeft: dummyArt, Color: 0xf0f0f0ff},
-			X:       dummyPos[0],
-			Y:       dummyPos[1],
+			X:       d.X,
+			Y:       d.Y,
 		}}
 	}
 	return c, w
@@ -67,12 +78,12 @@ func (c *Conn) Send(m protocol.ClientMsg) {
 
 // highFive applies the same distance rule as the lobby server.
 func (c *Conn) highFive(to string) {
-	if !c.dummy || to != dummy {
+	if c.dummy == nil || to != dummy {
 		c.push(protocol.ServerMsg{Type: protocol.TypeError, Code: protocol.CodeBadRequest, Text: "nobody to high-five"})
 		return
 	}
-	if math.Hypot(c.x-dummyPos[0], c.y-dummyPos[1]) > protocol.HighFiveRange+24 {
-		c.push(protocol.ServerMsg{Type: protocol.TypeError, Code: protocol.CodeTooFar, Text: "too far away from Dummy"})
+	if math.Hypot(c.x-c.dummy.X, c.y-c.dummy.Y) > protocol.HighFiveRange+24 {
+		c.push(protocol.ServerMsg{Type: protocol.TypeError, Code: protocol.CodeTooFar, Text: "too far away from " + c.dummy.Name})
 		return
 	}
 	c.push(protocol.ServerMsg{Type: protocol.TypeHighFived, From: you, To: dummy})

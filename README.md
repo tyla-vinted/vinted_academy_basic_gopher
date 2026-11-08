@@ -56,7 +56,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 
 | Command | What it does |
 |---|---|
-| `make run` | Opens the arena in solo mode: no server. Chat, emotes and status work. From step 5 on, a Dummy stands in the room for you to high-five. |
+| `make run` | Opens the arena in solo mode: no server. Chat, emotes and status work. In step 5, your `NewAvatar` puts a Dummy in the room for you to high-five. |
 | `make check` | Tests the steps that you have, and tells you what to do next. |
 | `make next` | If your steps pass, unlocks the next step. |
 | `make test` | Runs the tests, with less text than `make check`. |

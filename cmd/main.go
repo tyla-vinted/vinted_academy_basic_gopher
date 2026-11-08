@@ -63,9 +63,13 @@ func main() {
 		defer nc.Close()
 		conn, welcome = nc, w
 	} else {
-		// From step 5 on, a dummy stands in the room to high-five.
-		step5, _ := filepath.Glob("avatar/step5_*.go")
-		conn, welcome = solo.New(len(step5) > 0, me.Pos.X, me.Pos.Y)
+		// The learner's NewAvatar (step 5) creates the dummy; until it is
+		// written, it returns an empty Avatar and the room stays empty.
+		var d *solo.Dummy
+		if a := avatar.NewAvatar("Dummy", solo.DummyX, solo.DummyY); a != (avatar.Avatar{}) {
+			d = &solo.Dummy{Name: a.Name, X: a.Pos.X, Y: a.Pos.Y}
+		}
+		conn, welcome = solo.New(me.Pos.X, me.Pos.Y, d)
 		title += " (solo)"
 	}
 

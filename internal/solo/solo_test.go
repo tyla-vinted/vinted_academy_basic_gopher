@@ -7,7 +7,7 @@ import (
 )
 
 func TestEcho(t *testing.T) {
-	c, w := New(false, 0, 0)
+	c, w := New(0, 0, nil)
 	c.Send(protocol.ClientMsg{Type: protocol.TypeSay, Text: " hi "})
 	c.Send(protocol.ClientMsg{Type: protocol.TypeEmote, Emote: "dance"})
 	c.Send(protocol.ClientMsg{Type: protocol.TypeEmote, Emote: "fly"})
@@ -27,15 +27,15 @@ func TestEcho(t *testing.T) {
 }
 
 func TestDummyHighFive(t *testing.T) {
-	c, w := New(true, 0, 0)
-	if len(w.Players) != 1 || w.Players[0].ID != dummy {
+	c, w := New(0, 0, &Dummy{Name: "Dummy", X: DummyX, Y: DummyY})
+	if len(w.Players) != 1 || w.Players[0].ID != dummy || w.Players[0].Profile.Name != "Dummy" {
 		t.Fatalf("welcome players = %+v, want the dummy", w.Players)
 	}
 	c.Send(protocol.ClientMsg{Type: protocol.TypeHighFive, To: dummy})
 	if m := <-c.Events(); m.Type != protocol.TypeError || m.Code != protocol.CodeTooFar {
 		t.Errorf("far high-five: got %+v, want too_far", m)
 	}
-	c.Send(protocol.ClientMsg{Type: protocol.TypeMove, X: dummyPos[0] + 50, Y: dummyPos[1]})
+	c.Send(protocol.ClientMsg{Type: protocol.TypeMove, X: DummyX + 50, Y: DummyY})
 	c.Send(protocol.ClientMsg{Type: protocol.TypeHighFive, To: dummy})
 	if m := <-c.Events(); m.Type != protocol.TypeHighFived || m.To != dummy {
 		t.Errorf("close high-five: got %+v, want highfived", m)
@@ -46,7 +46,7 @@ func TestDummyHighFive(t *testing.T) {
 }
 
 func TestNoDummy(t *testing.T) {
-	c, w := New(false, 0, 0)
+	c, w := New(0, 0, nil)
 	if len(w.Players) != 0 {
 		t.Errorf("welcome players = %+v, want none", w.Players)
 	}
