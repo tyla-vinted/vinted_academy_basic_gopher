@@ -1,10 +1,6 @@
 package avatar
 
-import (
-	"errors"
-	"log"
-	"os"
-)
+import "errors"
 
 // Nothing to do in this file. It holds the values that the steps share.
 
@@ -38,11 +34,3 @@ var (
 	ErrTooFar         = errors.New("too far away")
 	ErrOnCooldown     = errors.New("on cooldown")
 )
-
-var debug = os.Getenv("ARENA_DEBUG") != ""
-
-func debugf(format string, args ...any) {
-	if debug {
-		log.Printf(format, args...)
-	}
-}

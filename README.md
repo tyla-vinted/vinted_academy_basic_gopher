@@ -42,7 +42,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 
 | Step | File | Topic | What you see in the arena |
 |---|---|---|---|
-| 1 | `me.go`, `step1_basics.go` | Variables, constants, shadowing, multiple return values | You walk (WASD or arrow keys) and run (Shift); your name; long messages cut with `...` |
+| 1 | `me.go`, `step1_basics.go` | Variables, constants, multiple return values | You walk (WASD or arrow keys); your name; long messages cut with `...` |
 | 2 | `step2_control.go` | `if`, `for`, `switch` | Your ASCII art in your colour, facing the way you walk; chat commands like `/wave` |
 | 3 | `step3_structs.go` | Structs and methods | Name cards; high-fives |
 | 4 | `step4_pointers.go` | Pointers vs values | `/status` shows under your name; emote cooldown |
@@ -66,7 +66,6 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 | Key | Action |
 |---|---|
 | WASD or arrow keys | Move |
-| Shift | Run |
 | Enter | Chat. Press Enter again to send, Esc to cancel. |
 | `/` | Type a command |
 | H | High-five the nearest person |
@@ -79,11 +78,3 @@ Chat commands: `/wave`, `/dance`, `/confetti`, `/heart`, `/think`, `/status <tex
 Edit `Art` and `Color` in [`avatar/me.go`](avatar/me.go). `Art` is at most 5 rows of 10 characters, printable ASCII only, facing right. Write each row in backticks, so that `\` needs no escape.
 
 Everyone in the lobby sees your character as **your** code draws it: `NormalizeArt` cleans it, `ColorFor` colours it, and `Mirror` turns it when you walk left.
-
-## Debugging
-
-Set `ARENA_DEBUG=1` to show debug output from the `avatar` package:
-
-```sh
-ARENA_DEBUG=1 make run
-```

@@ -357,7 +357,7 @@ func (g *Game) updateKeys(now time.Time) {
 	if dx != 0 && dy != 0 {
 		dx, dy = dx*math.Sqrt2/2, dy*math.Sqrt2/2
 	}
-	x, y := avatar.Move(g.me.Pos.X, g.me.Pos.Y, dx, dy, ebiten.IsKeyPressed(ebiten.KeyShift))
+	x, y := avatar.Move(g.me.Pos.X, g.me.Pos.Y, dx, dy)
 	if x != g.me.Pos.X {
 		g.meLeft = x < g.me.Pos.X
 	}
