@@ -1,5 +1,3 @@
 *.png
-/arena
-/server
 .DS_Store
 .idea/

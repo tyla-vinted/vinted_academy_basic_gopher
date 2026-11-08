@@ -24,7 +24,7 @@ A shared 2D room. Everyone in the workshop walks around as their own ASCII-art c
 
 On Linux, Ebitengine needs some system packages. See <https://ebitengine.org/en/documents/install.html>.
 
-On Windows without `make`, use the commands from the [Makefile](Makefile) directly, for example `go run ./cmd/arena`.
+On Windows without `make`, use the commands from the [Makefile](Makefile) directly, for example `go run ./cmd`.
 
 ## How the workshop works
 
