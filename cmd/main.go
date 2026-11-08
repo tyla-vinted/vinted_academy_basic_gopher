@@ -62,7 +62,13 @@ func main() {
 		// The learner's NewAvatar (step 5) creates the dummy; until it is
 		// written, it returns an empty Avatar and the room stays empty.
 		var d *solo.Dummy
-		if a := avatar.NewAvatar("Dummy", solo.DummyX, solo.DummyY); a != (avatar.Avatar{}) {
+		// The dummy is named after you, e.g. "Ada Jr". A Greet that matches
+		// names with strings.Contains (the step 9 bug) says "we are both".
+		dummyName := "Dummy"
+		if name != "" {
+			dummyName = name + " Jr"
+		}
+		if a := avatar.NewAvatar(dummyName, solo.DummyX, solo.DummyY); a != (avatar.Avatar{}) {
 			d = &solo.Dummy{Name: a.Name, X: a.Pos.X, Y: a.Pos.Y}
 		}
 		conn, welcome = solo.New(me.Pos.X, me.Pos.Y, d)

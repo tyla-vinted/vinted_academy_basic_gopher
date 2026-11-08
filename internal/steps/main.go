@@ -41,7 +41,7 @@ var titles = map[int]string{
 	6: "pointers: your status and emote cooldown",
 	7: "generics: the same code for any type",
 	8: "errors: why a high-five failed",
-	9: "testing",
+	9: "testing: greetings",
 }
 
 var emptyAfterBrace = regexp.MustCompile(`\{\n\s*\n`)
