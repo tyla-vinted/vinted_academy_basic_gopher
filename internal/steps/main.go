@@ -110,7 +110,7 @@ func check() error {
 		return fmt.Errorf("\nStep %d is not done yet. Fix the failing tests above, then run: make check", n)
 	}
 	if n == lastStep {
-		fmt.Println("\nAll steps are done. Join the lobby: make join SERVER=<url>")
+		fmt.Println("\nAll steps are done. Join the lobby: make final SERVER=<url>")
 	} else {
 		fmt.Printf("\nStep %d is done. Unlock step %d: make next\n", n, n+1)
 	}
@@ -277,7 +277,7 @@ func hint() error {
 	if m == nil {
 		n := current()
 		if n == lastStep {
-			fmt.Println("All tests pass. Join the lobby: make join SERVER=<url>")
+			fmt.Println("All tests pass. Join the lobby: make final SERVER=<url>")
 		} else {
 			fmt.Printf("All tests pass. Unlock step %d: make next\n", n+1)
 		}

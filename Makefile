@@ -1,6 +1,6 @@
 SERVER ?=
 
-.PHONY: run check next hint test join doctor
+.PHONY: run check next hint test final doctor
 
 ## run: open the arena in solo mode (no server)
 run:
@@ -22,9 +22,9 @@ hint:
 test:
 	go test ./avatar/...
 
-## join: when all 9 steps pass, join the workshop lobby for the finale
-join:
-	@test -n "$(SERVER)" || (echo "usage: make join SERVER=https://<host>"; exit 1)
+## final: when all 9 steps pass, join the workshop lobby for the finale
+final:
+	@test -n "$(SERVER)" || (echo "usage: make final SERVER=https://<host>"; exit 1)
 	@go run ./internal/steps final
 	go run ./cmd -server $(SERVER)
 
