@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand/v2"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -62,7 +63,9 @@ func main() {
 		defer nc.Close()
 		conn, welcome = nc, w
 	} else {
-		conn, welcome = solo.New()
+		// From step 5 on, a dummy stands in the room to high-five.
+		step5, _ := filepath.Glob("avatar/step5_*.go")
+		conn, welcome = solo.New(len(step5) > 0, me.Pos.X, me.Pos.Y)
 		title += " (solo)"
 	}
 
