@@ -4,7 +4,7 @@ package avatar
 // again to see the result.
 
 const (
-	Name = "" // TODO: your name, 1-16 characters. It must be unique in the lobby.
+	Name = "" // TODO: your name, 1-16 characters.
 
 	// Color is the colour of your art: red, orange, yellow, green, blue,
 	// cyan, purple, pink, white or grey.
@@ -15,9 +15,9 @@ const (
 // characters. Use only the characters on a US keyboard. The arena mirrors it
 // when you walk left. In backticks, \ needs no escape.
 var Art = []string{
-	`  ,---.  `,
-	` ( o o)> `,
-	`  \ - /  `,
-	`  /|_|\  `,
-	`   / \   `,
+	`  n____n  `,
+	` ( O  O ) `,
+	` (  ''  )/`,
+	` (______) `,
+	`   d  b   `,
 }
