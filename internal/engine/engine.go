@@ -400,27 +400,33 @@ func (g *Game) submit(line string, now time.Time) {
 	if g.lost {
 		return
 	}
-	kind, arg := avatar.ParseCommand(line)
-	if kind == avatar.CommandSay && arg == "" {
-		arg = line // ParseCommand is not written yet: treat everything as chat
-	}
-	switch kind {
-	case avatar.CommandSay:
-		if err := avatar.CheckMessage(arg); err != nil {
-			g.toast(err.Error(), colError, now)
-			return
-		}
-		g.conn.Send(protocol.ClientMsg{Type: protocol.TypeSay, Text: arg})
-	case avatar.CommandEmote:
-		g.emote(arg, now)
-	case avatar.CommandStatus:
-		g.me.SetStatus(arg)
+	trimmed := strings.TrimSpace(line)
+	if rest, ok := strings.CutPrefix(trimmed, "/status"); ok && (rest == "" || rest[0] == ' ') {
+		g.me.SetStatus(strings.TrimSpace(rest))
 		g.conn.Send(protocol.ClientMsg{Type: protocol.TypeStatus, Status: g.me.Status})
-	case avatar.CommandHighFive:
-		g.highFive(now)
-	default:
-		g.toast(fmt.Sprintf("Unknown command /%s. Try /%s, /status <text>, /highfive.", arg, strings.Join(avatar.Emotes, " /")), colError, now)
+		return
 	}
+	if trimmed == "/highfive" {
+		g.highFive(now)
+		return
+	}
+	if emote, ok := avatar.EmoteFor(line); ok {
+		g.emote(emote, now)
+		return
+	}
+	if strings.HasPrefix(trimmed, "/") {
+		g.toast(fmt.Sprintf("Unknown command %s. Try /%s, /status <text>, /highfive.", trimmed, strings.Join(avatar.Emotes, " /")), colError, now)
+		return
+	}
+	text, ok := avatar.Message(line)
+	if !ok {
+		return
+	}
+	if err := avatar.CheckMessage(text); err != nil {
+		g.toast(err.Error(), colError, now)
+		return
+	}
+	g.conn.Send(protocol.ClientMsg{Type: protocol.TypeSay, Text: text})
 }
 
 func (g *Game) emote(name string, now time.Time) {

@@ -37,18 +37,12 @@ func Mirror(rows []string) []string {
 	return nil
 }
 
-type Command int
+func Message(input string) (text string, ok bool) {
+	return "", false
+}
 
-const (
-	CommandSay Command = iota
-	CommandEmote
-	CommandStatus
-	CommandHighFive
-	CommandUnknown
-)
-
-func ParseCommand(input string) (Command, string) {
-	return CommandSay, ""
+func EmoteFor(input string) (emote string, ok bool) {
+	return "", false
 }
 
 type Pos struct {
