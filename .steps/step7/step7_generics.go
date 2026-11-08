@@ -5,7 +5,9 @@ package avatar
 
 // Reverse returns a new slice with the items in reverse order. Your
 // ReverseString from step 3 only works on runes; Reverse works on any slice.
-// When it works, you can use it in ReverseString.
+//
+// TODO: when Reverse works, use it in your ReverseString (step 3), then
+// run make check: the step 3 tests show that nothing broke.
 func Reverse[T any](items []T) []T {
 	return items // TODO
 }
