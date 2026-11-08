@@ -9,10 +9,6 @@ const (
 	MaxMessageLen = 80
 	MaxStatusLen  = 20
 
-	// HighFiveRange is the largest distance in pixels between two avatars
-	// that still allows a high-five.
-	HighFiveRange = 100
-
 	// Your Art must fit in this box.
 	MaxArtRows = 5
 	MaxArtCols = 10

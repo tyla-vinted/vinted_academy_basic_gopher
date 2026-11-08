@@ -26,8 +26,8 @@ func TestStep5_CanHighFive(t *testing.T) {
 		want bool
 	}{
 		{Pos{100, 100}, true},
-		{Pos{100 + HighFiveRange, 100}, true},
-		{Pos{100 + HighFiveRange + 1, 100}, false},
+		{Pos{200, 100}, true},
+		{Pos{201, 100}, false},
 		{Pos{500, 500}, false},
 	}
 	for _, tt := range tests {

@@ -455,7 +455,7 @@ func (g *Game) highFive(now time.Time) {
 			best, bestD = p, d
 		}
 	}
-	if best == nil || bestD > 3*avatar.HighFiveRange {
+	if best == nil || bestD > 3*protocol.HighFiveRange {
 		g.toast("Nobody nearby. Walk up to someone first.", colError, now)
 		return
 	}
