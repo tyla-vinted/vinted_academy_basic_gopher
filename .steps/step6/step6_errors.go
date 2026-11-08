@@ -1,7 +1,7 @@
 package avatar
 
 // Step 6: errors. The sentinel errors are in provided.go.
-// Run: go test ./avatar -run Step6 -v
+// Check: make check
 
 // ValidationError tells which field in avatar/me.go is wrong and why.
 type ValidationError struct {

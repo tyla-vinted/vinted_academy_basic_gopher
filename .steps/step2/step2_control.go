@@ -3,7 +3,7 @@ package avatar
 import "image/color"
 
 // Step 2: if, for, switch.
-// Run: go test ./avatar -run Step2 -v
+// Check: make check
 
 var (
 	Red    = color.RGBA{235, 80, 70, 255}

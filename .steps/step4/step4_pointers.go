@@ -6,7 +6,7 @@ import (
 )
 
 // Step 4: pointers vs values.
-// Run: go test ./avatar -run Step4 -v
+// Check: make check
 
 // SetStatus sets the status shown under your name, as in "/status lunch":
 // s without the spaces around it, cut to MaxStatusLen characters.

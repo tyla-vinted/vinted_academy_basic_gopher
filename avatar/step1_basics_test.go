@@ -17,6 +17,29 @@ func TestStep1_MoveSpeed(t *testing.T) {
 	}
 }
 
+func TestStep1_Move(t *testing.T) {
+	tests := []struct {
+		name         string
+		dx, dy       float64
+		running      bool
+		wantX, wantY float64
+	}{
+		{"stand still", 0, 0, false, 100, 100},
+		{"walk right", 1, 0, false, 100 + WalkSpeed, 100},
+		{"walk left", -1, 0, false, 100 - WalkSpeed, 100},
+		{"walk down", 0, 1, false, 100, 100 + WalkSpeed},
+		{"walk up", 0, -1, false, 100, 100 - WalkSpeed},
+		{"run right", 1, 0, true, 100 + WalkSpeed*RunMultiplier, 100},
+	}
+	for _, tt := range tests {
+		x, y := Move(100, 100, tt.dx, tt.dy, tt.running)
+		if x != tt.wantX || y != tt.wantY {
+			t.Errorf("%s: Move(100, 100, %v, %v, %v) = %v, %v; want %v, %v",
+				tt.name, tt.dx, tt.dy, tt.running, x, y, tt.wantX, tt.wantY)
+		}
+	}
+}
+
 func TestStep1_Truncate(t *testing.T) {
 	tests := []struct {
 		in      string

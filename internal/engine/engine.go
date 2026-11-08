@@ -354,15 +354,14 @@ func (g *Game) updateKeys(now time.Time) {
 	if dx == 0 && dy == 0 {
 		return
 	}
-	if dx != 0 {
-		g.meLeft = dx < 0
-	}
 	if dx != 0 && dy != 0 {
 		dx, dy = dx*math.Sqrt2/2, dy*math.Sqrt2/2
 	}
-	running := ebiten.IsKeyPressed(ebiten.KeyShift)
-	speed := avatar.MoveSpeed(running)
-	next := g.me.Pos.Add(dx*speed, dy*speed)
+	x, y := avatar.Move(g.me.Pos.X, g.me.Pos.Y, dx, dy, ebiten.IsKeyPressed(ebiten.KeyShift))
+	if x != g.me.Pos.X {
+		g.meLeft = x < g.me.Pos.X
+	}
+	next := avatar.Pos{X: x, Y: y}
 	w, h := g.artSize(g.people[g.you].art())
 	next.X = math.Max(w/2, math.Min(protocol.RoomW-w/2, next.X))
 	next.Y = math.Max(h/2+40, math.Min(protocol.RoomH-h/2-30, next.Y))

@@ -20,7 +20,7 @@ A shared 2D room. Everyone in the workshop walks around as their own ASCII-art c
    make run
    ```
 
-   Expected result: a window opens with a grey `[?]`. That is you. Walk with WASD or the arrow keys.
+   Expected result: a window opens with a grey `[?]`. That is you. You cannot walk yet: that is your first task.
 
 On Linux, Ebitengine needs some system packages. See <https://ebitengine.org/en/documents/install.html>.
 
@@ -42,7 +42,7 @@ Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked ye
 
 | Step | File | Topic | What you see in the arena |
 |---|---|---|---|
-| 1 | `me.go`, `step1_basics.go` | Variables, constants, shadowing, multiple return values | Your name; running with Shift; long messages cut with `...` |
+| 1 | `me.go`, `step1_basics.go` | Variables, constants, shadowing, multiple return values | You walk (WASD or arrow keys) and run (Shift); your name; long messages cut with `...` |
 | 2 | `step2_control.go` | `if`, `for`, `switch` | Your ASCII art in your colour, facing the way you walk; chat commands like `/wave` |
 | 3 | `step3_structs.go` | Structs and methods | Name cards; high-fives |
 | 4 | `step4_pointers.go` | Pointers vs values | `/status` shows under your name; emote cooldown |

@@ -3,7 +3,7 @@ package avatar
 import "cmp"
 
 // Step 5: generics.
-// Run: go test ./avatar -run Step5 -v
+// Check: make check
 
 // ClampInt and ClampFloat are the same function twice. Write Clamp once, for
 // any ordered type, so that both of them can go.

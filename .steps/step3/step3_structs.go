@@ -1,7 +1,7 @@
 package avatar
 
 // Step 3: structs and methods.
-// Run: go test ./avatar -run Step3 -v
+// Check: make check
 
 type Pos struct {
 	X, Y float64

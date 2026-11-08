@@ -4,7 +4,7 @@ import "strings"
 
 // Step 7: testing. Greet has no tests yet, and it has bugs.
 // Write a table-driven test in step7_testing_test.go, find the bugs, fix them.
-// Run: go test ./avatar -run Step7 -v
+// Check: make check
 
 // Greet returns the line that you see when you walk up to other.
 //   - same name, in any case → "Hey, we are both <name>!"
