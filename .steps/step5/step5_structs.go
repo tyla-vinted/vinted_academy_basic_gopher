@@ -19,7 +19,7 @@ func NewAvatar(name string, x, y float64) Avatar {
 }
 
 // DistanceTo returns the straight-line distance from p to q.
-// Hint: math.Hypot.
+// Hint: math.Hypot, https://pkg.go.dev/math#Hypot
 func (p Pos) DistanceTo(q Pos) float64 {
 	return 0 // TODO
 }
