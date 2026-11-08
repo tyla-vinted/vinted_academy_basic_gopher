@@ -117,6 +117,7 @@ type Game struct {
 	bannerUntil time.Time
 	particles   []particle
 	emoteCD     avatar.Cooldown
+	fiveCD      avatar.Cooldown
 
 	meLeft     bool
 	lastSent   avatar.Pos
@@ -143,6 +144,7 @@ func New(cfg Config) *Game {
 		me:      cfg.Me,
 		people:  map[string]*person{},
 		emoteCD: avatar.Cooldown{Every: 2 * time.Second},
+		fiveCD:  avatar.Cooldown{Every: time.Second},
 		font:    &text.GoTextFace{Source: reg, Size: 14},
 		small:   &text.GoTextFace{Source: reg, Size: 12},
 		bold:    &text.GoTextFace{Source: bld, Size: 14},
@@ -424,16 +426,12 @@ func (g *Game) submit(line string, now time.Time) {
 	if !ok {
 		return
 	}
-	if err := avatar.CheckMessage(text); err != nil {
-		g.toast(err.Error(), colError, now)
-		return
-	}
 	g.conn.Send(protocol.ClientMsg{Type: protocol.TypeSay, Text: text})
 }
 
 func (g *Game) emote(name string, now time.Time) {
 	if !g.emoteCD.Try(now) {
-		g.toast(fmt.Sprintf("/%s: %v", name, avatar.ErrOnCooldown), colError, now)
+		g.toast("/"+name+": on cooldown", colError, now)
 		return
 	}
 	g.conn.Send(protocol.ClientMsg{Type: protocol.TypeEmote, Emote: name})
@@ -455,7 +453,7 @@ func (g *Game) highFive(now time.Time) {
 		return
 	}
 	other := g.asAvatar(best)
-	if err := avatar.CheckHighFive(*g.me, other); err != nil {
+	if err := avatar.HighFive(*g.me, other, &g.fiveCD, now); err != nil {
 		g.toast(err.Error(), colError, now)
 		return
 	}

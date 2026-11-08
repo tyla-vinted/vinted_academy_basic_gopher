@@ -1,50 +1,51 @@
 package avatar
 
-// Step 8: errors. The sentinel errors are in provided.go.
+import (
+	"errors"
+	"time"
+)
+
+// Step 8: errors: why a high-five failed.
 // Check: make check
 
-// ValidationError tells which part of your avatar is wrong and why.
-type ValidationError struct {
-	Field  string
-	Reason string
+// Errors that a high-five check can return.
+var (
+	ErrTooFar     = errors.New("too far away")
+	ErrOnCooldown = errors.New("on cooldown")
+)
+
+// BusyError says that someone does not want a high-five right now.
+type BusyError struct {
+	Name string
 }
 
-// Error returns "<Field>: <Reason>", for example "Name: must not be empty".
-func (e *ValidationError) Error() string {
+// Error returns "<Name> is busy", for example "Ada is busy".
+func (e *BusyError) Error() string {
 	return "" // TODO
 }
 
-// CheckMessage checks a chat message before the arena sends it.
-//   - empty after trimming spaces → ErrEmptyMessage
-//   - more than MaxMessageLen characters → an error that wraps
-//     ErrMessageTooLong, with the text "<n> characters, max 80: message is too long"
-//   - otherwise nil
-func CheckMessage(msg string) error {
+// checkDistance returns ErrTooFar when your CanHighFive (step 5) says no.
+func checkDistance(me, other Avatar) error {
 	return nil // TODO
 }
 
-// CheckHighFive returns an error that wraps ErrTooFar when me cannot
-// high-five other, with the text "high-five with <name>: too far away".
-// Use your CanHighFive from step 5.
-func CheckHighFive(me, other Avatar) error {
+// checkBusy returns a *BusyError when other's status is "busy".
+func checkBusy(other Avatar) error {
+	if other.Status == "busy" {
+		return &BusyError{Name: other.Name}
+	}
+	return nil
+}
+
+// checkCooldown returns ErrOnCooldown when your cooldown (step 6) says no.
+func checkCooldown(cd *Cooldown, now time.Time) error {
 	return nil // TODO
 }
 
-// ValidateName returns a *ValidationError for the first rule that name breaks:
-//   - empty after trimming spaces → Field "Name", Reason "must not be empty"
-//   - longer than MaxNameLen      → Field "Name", Reason "must be at most 16 characters"
-//
-// Otherwise it returns nil.
-func ValidateName(name string) error {
+// HighFive checks a high-five before the arena sends it. It runs
+// checkDistance, checkBusy and checkCooldown, in that order. At the first
+// error it stops and returns that error wrapped with fmt.Errorf and %w:
+// "high-five with <other's name>: <the error>". Otherwise it returns nil.
+func HighFive(me, other Avatar, cd *Cooldown, now time.Time) error {
 	return nil // TODO
-}
-
-// JoinHint turns a join error into advice for the terminal. The error can be
-// wrapped any number of times.
-//   - ErrNameTaken       → "Someone has this name already. Change the name that Me returns."
-//   - ErrLobbyFull       → "The lobby is full. Ask the host."
-//   - *ValidationError   → "Fix <Field> in Me: <Reason>."
-//   - anything else      → ""
-func JoinHint(err error) string {
-	return "" // TODO
 }

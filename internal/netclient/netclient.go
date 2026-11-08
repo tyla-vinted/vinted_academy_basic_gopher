@@ -17,9 +17,22 @@ import (
 	"github.com/coder/websocket"
 	"github.com/coder/websocket/wsjson"
 
-	"arena/avatar"
 	"arena/internal/protocol"
 )
+
+// Errors that Dial returns when the lobby rejects a join.
+var (
+	ErrNameTaken = errors.New("name is taken")
+	ErrLobbyFull = errors.New("lobby is full")
+)
+
+// FieldError says which part of your avatar the lobby rejected, and why.
+type FieldError struct {
+	Field  string
+	Reason string
+}
+
+func (e *FieldError) Error() string { return e.Field + ": " + e.Reason }
 
 type Conn struct {
 	c      *websocket.Conn
@@ -88,13 +101,13 @@ func Dial(ctx context.Context, addr string, join protocol.ClientMsg) (*Conn, pro
 func joinError(m protocol.ServerMsg) error {
 	switch m.Code {
 	case protocol.CodeNameTaken:
-		return avatar.ErrNameTaken
+		return ErrNameTaken
 	case protocol.CodeLobbyFull:
-		return avatar.ErrLobbyFull
+		return ErrLobbyFull
 	case protocol.CodeOutdated:
 		return fmt.Errorf("%s (the server has newer code)", m.Reason)
 	case protocol.CodeInvalidProfile:
-		return &avatar.ValidationError{Field: fieldName(m.Field), Reason: m.Reason}
+		return &FieldError{Field: fieldName(m.Field), Reason: m.Reason}
 	default:
 		return fmt.Errorf("%s: %s", m.Code, m.Reason)
 	}

@@ -6,6 +6,7 @@
 package avatar
 
 import (
+	"errors"
 	"strings"
 	"time"
 )
@@ -100,41 +101,48 @@ func (c Cooldown) Try(now time.Time) bool {
 	return true
 }
 
-func Reverse[T any](xs []T) []T {
-	return xs
+func Reverse[T any](items []T) []T {
+	return items
 }
 
-func Filter[T any](xs []T, keep func(T) bool) []T {
+func Filter[T any](items []T, keep func(T) bool) []T {
 	return nil
 }
 
-func Last[T any](xs []T, n int) []T {
+func Last[T any](items []T, n int) []T {
 	return nil
 }
 
-type ValidationError struct {
-	Field  string
-	Reason string
+var (
+	ErrTooFar     = errors.New("too far away")
+	ErrOnCooldown = errors.New("on cooldown")
+)
+
+type BusyError struct {
+	Name string
 }
 
-func (e *ValidationError) Error() string {
+func (e *BusyError) Error() string {
 	return ""
 }
 
-func CheckMessage(msg string) error {
+func checkDistance(me, other Avatar) error {
 	return nil
 }
 
-func CheckHighFive(me, other Avatar) error {
+func checkBusy(other Avatar) error {
+	if other.Status == "busy" {
+		return &BusyError{Name: other.Name}
+	}
 	return nil
 }
 
-func ValidateName(name string) error {
+func checkCooldown(cd *Cooldown, now time.Time) error {
 	return nil
 }
 
-func JoinHint(err error) string {
-	return ""
+func HighFive(me, other Avatar, cd *Cooldown, now time.Time) error {
+	return nil
 }
 
 func Greet(me, other Avatar) string {

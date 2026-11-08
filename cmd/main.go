@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -26,11 +27,6 @@ func main() {
 
 	name, colorName, rawArt := avatar.Me()
 	name = strings.TrimSpace(name)
-	if online {
-		if err := avatar.ValidateName(name); err != nil {
-			fail(err)
-		}
-	}
 
 	x := 120 + rand.Float64()*(protocol.RoomW-240)
 	y := 160 + rand.Float64()*(protocol.RoomH-280)
@@ -85,8 +81,14 @@ func main() {
 
 func fail(err error) {
 	fmt.Fprintln(os.Stderr, "Could not join:", err)
-	if hint := avatar.JoinHint(err); hint != "" {
-		fmt.Fprintln(os.Stderr, "Hint:", hint)
+	var fe *netclient.FieldError
+	switch {
+	case errors.Is(err, netclient.ErrNameTaken):
+		fmt.Fprintln(os.Stderr, "Someone has this name already. Change the name that Name returns.")
+	case errors.Is(err, netclient.ErrLobbyFull):
+		fmt.Fprintln(os.Stderr, "The lobby is full. Ask the host.")
+	case errors.As(err, &fe):
+		fmt.Fprintf(os.Stderr, "Fix your %s: %s.\n", fe.Field, fe.Reason)
 	}
 	os.Exit(1)
 }

@@ -40,7 +40,7 @@ var titles = map[int]string{
 	5: "structs and methods: high-fives",
 	6: "pointers: your status and emote cooldown",
 	7: "generics: the same code for any type",
-	8: "errors",
+	8: "errors: why a high-five failed",
 	9: "testing",
 }
 
