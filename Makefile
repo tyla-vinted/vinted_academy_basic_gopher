@@ -1,31 +1,32 @@
 SERVER ?=
-STEP ?=
 
-.PHONY: run test step online join doctor
+.PHONY: run check next test online join doctor
 
 ## run: open the arena in solo mode (no server)
 run:
 	go run ./cmd
 
-## test: run all tests
+## check: test the steps you have
+check:
+	@go run ./internal/steps check
+
+## next: if your steps pass, unlock the next step
+next:
+	@go run ./internal/steps next
+
+## test: run all tests, with less text than make check
 test:
 	go test ./avatar/...
 
-## step: run the tests of one step, e.g. make step STEP=3
-step:
-	@test -n "$(STEP)" || (echo "usage: make step STEP=<1-7>"; exit 1)
-	go test ./avatar -run 'Step$(STEP)_' -v
-
-## online: join the workshop lobby without running the tests, e.g. make online SERVER=https://abc.ngrok-free.app
+## online: join the workshop lobby, e.g. make online SERVER=https://abc.ngrok-free.app
 online:
 	@test -n "$(SERVER)" || (echo "usage: make online SERVER=https://<host>"; exit 1)
 	go run ./cmd -server $(SERVER)
 
-## join: run all tests, then join the workshop lobby
+## join: when all 7 steps pass, join the workshop lobby for the finale
 join:
 	@test -n "$(SERVER)" || (echo "usage: make join SERVER=https://<host>"; exit 1)
-	go vet ./avatar/...
-	@go test ./avatar/... || (echo; echo "Your tests are your ticket to the lobby. Make them pass first."; exit 1)
+	@go run ./internal/steps final
 	go run ./cmd -server $(SERVER)
 
 ## doctor: check that Go and the build work on this laptop

@@ -30,27 +30,36 @@ On Windows without `make`, use the commands from the [Makefile](Makefile) direct
 
 All your code is in the [`avatar/`](avatar) folder. The rest of the repository (rendering, network) is ready, and you do not have to read it.
 
-Each step has a file with `// TODO`s and a test file. The tests fail now. Make them pass, then run `make run` to see the result in the arena.
+You start with step 1 only. Each step is a file with `// TODO`s and a test file. For each step:
+
+1. Write the code in the step file. Run `make run` to see the result in the arena.
+2. Run `make check`. Expected result: `Step N is done`. If a test fails, the output tells you what to fix.
+3. Run `make next`. Expected result: the next step's files appear in `avatar/`.
+
+`make next` runs the tests first, and it unlocks the next step only when they pass.
+
+Do not edit `avatar/locked.go`. It holds the steps that you have not unlocked yet, and `make next` rewrites it.
 
 | Step | File | Topic | What you see in the arena |
 |---|---|---|---|
-| 1 | [`me.go`](avatar/me.go), [`step1_basics.go`](avatar/step1_basics.go) | Variables, constants, shadowing, multiple return values | Your name; running with Shift; long messages cut with `...` |
-| 2 | [`step2_control.go`](avatar/step2_control.go) | `if`, `for`, `switch` | Your ASCII art in your colour, facing the way you walk; chat commands like `/wave` |
-| 3 | [`step3_structs.go`](avatar/step3_structs.go) | Structs and methods | Name cards; high-fives |
-| 4 | [`step4_pointers.go`](avatar/step4_pointers.go) | Pointers vs values | `/status` shows under your name; emote cooldown |
-| 5 | [`step5_generics.go`](avatar/step5_generics.go) | Generics | Chat history; the "Nearby" list |
-| 6 | [`step6_errors.go`](avatar/step6_errors.go) | Errors: `error` values, `fmt.Errorf`, `errors.Is`/`errors.As` | Clear error messages in the game and in the terminal |
-| 7 | [`step7_testing.go`](avatar/step7_testing.go) | Testing | Correct greetings on name cards |
+| 1 | `me.go`, `step1_basics.go` | Variables, constants, shadowing, multiple return values | Your name; running with Shift; long messages cut with `...` |
+| 2 | `step2_control.go` | `if`, `for`, `switch` | Your ASCII art in your colour, facing the way you walk; chat commands like `/wave` |
+| 3 | `step3_structs.go` | Structs and methods | Name cards; high-fives |
+| 4 | `step4_pointers.go` | Pointers vs values | `/status` shows under your name; emote cooldown |
+| 5 | `step5_generics.go` | Generics | Chat history; the "Nearby" list |
+| 6 | `step6_errors.go` | Errors: `error` values, `fmt.Errorf`, `errors.Is`/`errors.As` | Clear error messages in the game and in the terminal |
+| 7 | `step7_testing.go` | Testing | Correct greetings on name cards |
 
 ## Commands
 
 | Command | What it does |
 |---|---|
 | `make run` | Opens the arena in solo mode: only you, no server. Chat, emotes and status work. |
-| `make step STEP=3` | Runs the tests of step 3 only. |
-| `make test` | Runs all tests. |
+| `make check` | Tests the steps that you have, and tells you what to do next. |
+| `make next` | If your steps pass, unlocks the next step. |
+| `make test` | Runs the tests, with less text than `make check`. |
 | `make online SERVER=<url>` | Joins the workshop lobby without the tests. Use it to try high-fives with your neighbours. |
-| `make join SERVER=<url>` | Runs all tests. If they pass, joins the workshop lobby. |
+| `make join SERVER=<url>` | When all 7 steps pass, joins the workshop lobby for the finale. |
 
 ## Controls
 
