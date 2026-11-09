@@ -448,6 +448,9 @@ func (g *Game) emote(name string, now time.Time) {
 }
 
 func (g *Game) highFive(now time.Time) {
+	if !g.me.CanHighFive(*g.me) {
+		return // CanHighFive is not written yet (step 5)
+	}
 	var best *person
 	bestD := math.Inf(1)
 	for id, p := range g.people {
@@ -468,7 +471,7 @@ func (g *Game) highFive(now time.Time) {
 		return
 	}
 	if !g.me.CanHighFive(other) {
-		return // until step 5, CanHighFive says no to everyone
+		return
 	}
 	g.conn.Send(protocol.ClientMsg{Type: protocol.TypeHighFive, To: best.info.ID})
 }
