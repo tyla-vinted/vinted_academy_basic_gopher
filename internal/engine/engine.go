@@ -332,7 +332,7 @@ func (g *Game) updateKeys(now time.Time) {
 	}
 	for i, key := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3} {
 		if inpututil.IsKeyJustPressed(key) {
-			g.emote(protocol.Emotes[i], now)
+			g.emoteCommand("/"+protocol.Emotes[i], now)
 		}
 	}
 
@@ -410,12 +410,7 @@ func (g *Game) submit(line string, now time.Time) {
 		g.highFive(now)
 		return
 	}
-	if emote, ok := avatar.EmoteFor(line); ok {
-		if int(emote) < 0 || int(emote) >= len(protocol.Emotes) {
-			g.toast("That emote does not exist in the lobby.", colError, now)
-			return
-		}
-		g.emote(protocol.Emotes[emote], now)
+	if g.emoteCommand(line, now) {
 		return
 	}
 	if strings.HasPrefix(trimmed, "/") {
@@ -427,6 +422,21 @@ func (g *Game) submit(line string, now time.Time) {
 		return
 	}
 	g.conn.Send(protocol.ClientMsg{Type: protocol.TypeSay, Text: text})
+}
+
+// emoteCommand sends the emote for input, as the learner's EmoteFor maps it.
+// It reports false when EmoteFor does not know input.
+func (g *Game) emoteCommand(input string, now time.Time) bool {
+	emote, ok := avatar.EmoteFor(input)
+	if !ok {
+		return false
+	}
+	if int(emote) < 0 || int(emote) >= len(protocol.Emotes) {
+		g.toast("That emote does not exist in the lobby.", colError, now)
+		return true
+	}
+	g.emote(protocol.Emotes[emote], now)
+	return true
 }
 
 func (g *Game) emote(name string, now time.Time) {
