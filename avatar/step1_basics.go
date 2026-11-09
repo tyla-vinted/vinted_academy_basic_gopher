@@ -5,10 +5,10 @@ package avatar
 
 // Name returns your name: 1-16 characters.
 func Name() string {
-	return "Evaldas" // TODO
+	return "" // TODO
 }
 
-// Art returns your gopher avatar as ASCII art: at most 5 rows of 10 characters.
+// Art returns your avatar as ASCII art: at most 5 rows of 10 characters.
 // You can start from this gopher:
 //
 //	 n____n
@@ -29,10 +29,10 @@ func Art() []string {
 // Color returns the colour of your art: red, orange, yellow, green, blue,
 // cyan, purple, pink, white or grey.
 func Color() string {
-	return "cyan" // TODO
+	return "" // TODO
 }
 
 // Me returns your name, your colour and your art.
 func Me() (name, color string, art []string) {
-	return Name(), Color(), Art() // TODO
+	return "", "", nil // TODO
 }
